@@ -1,6 +1,6 @@
 import { FaceRegistrationRequestType } from 'src/domain/types/adapters/faceRegistration/faceRegistrationRequest-type';
 import { FaceRegistrationResponseType } from 'src/domain/types/adapters/faceRegistration/faceRegistrationResponse-type';
-import { FaceRegistrationAdapterInterface } from '../abstract/adapters/faceRegistration-adapter-interface';
+import { FaceRegistrationAdapterInterface } from '../../abstract/helpers/adapters/faceRegistration-adapter-interface';
 
 //classe para vincular foto selfie com pessoa
 //armazena no banco de dados da caf
