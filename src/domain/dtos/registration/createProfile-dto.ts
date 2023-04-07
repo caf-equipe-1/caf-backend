@@ -2,6 +2,6 @@ export type CreateProfileDto = {
   name: string;
   email: string;
   password: string;
-  selfie: string;
+  photo: string;
   cpf: string;
 };
