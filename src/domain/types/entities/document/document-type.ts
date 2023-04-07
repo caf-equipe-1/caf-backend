@@ -1,4 +1,4 @@
-export type Document = {
+export type DocumentType = {
   id: string;
   name: string;
   document: string;
