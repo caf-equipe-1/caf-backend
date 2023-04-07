@@ -1,6 +1,6 @@
-export type RegisterPassword = {
+export type RegisterPasswordDto = {
   passwords: {
-    referenceName: string;
+    name: string;
     password: string;
   }[];
 };

@@ -1,3 +1,4 @@
-export type RegisterDocument = {
+export type RegisterDocumentDto = {
   document: string;
+  name: string;
 };
