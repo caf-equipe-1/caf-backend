@@ -4,4 +4,6 @@ export type Card = {
   nickname: string;
   number: number;
   securityCode: number;
+  createdAt: string;
+  updatedAt: string;
 };
