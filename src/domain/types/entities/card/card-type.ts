@@ -1,4 +1,4 @@
-export type Card = {
+export type CardType = {
   id: string;
   name: string;
   nickname: string;

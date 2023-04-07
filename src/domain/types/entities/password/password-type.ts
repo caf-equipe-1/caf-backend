@@ -1,4 +1,4 @@
-export type Password = {
+export type PasswordType = {
   id: string;
   name: string;
   password: string;

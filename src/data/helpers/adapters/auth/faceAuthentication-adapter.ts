@@ -1,6 +1,6 @@
 import { FaceAuthenticationRequestType } from 'src/domain/types/adapters/faceAuthentication/faceAuthenticationRequest-type';
 import { FaceAuthenticationResponseType } from 'src/domain/types/adapters/faceAuthentication/faceAuthenticationResponse-type';
-import { FaceAuthenticationAdapterInterface } from '../../abstract/helpers/adapters/faceAuthentication-adapter-interface';
+import { FaceAuthenticationAdapterInterface } from '../../../abstract/helpers/adapters/auth/faceAuthentication-adapter-interface';
 
 //classe para realizar a autenticacao de um usuario por imagem
 

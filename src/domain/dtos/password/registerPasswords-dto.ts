@@ -1,6 +1,5 @@
+import { CreateOrUpdatePasswordType } from 'src/domain/types/entities/password/createOrUpdatePassword-type';
+
 export type RegisterPasswordDto = {
-  passwords: {
-    name: string;
-    password: string;
-  }[];
+  passwords: CreateOrUpdatePasswordType[];
 };

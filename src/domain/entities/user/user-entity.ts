@@ -13,4 +13,6 @@ export type User = {
   documents: { id: string; name: string }[];
   cards: Card[];
   apps: App[];
+  createdAt: string;
+  updatedAt: string;
 };

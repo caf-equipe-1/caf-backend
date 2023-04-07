@@ -1,7 +1,7 @@
-export type Password = {
+export type DocumentType = {
   id: string;
   name: string;
-  password: string;
+  document: string;
   createdAt: string;
   updatedAt: string;
 };

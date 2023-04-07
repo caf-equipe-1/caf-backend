@@ -1,8 +1,5 @@
+import { CreateOrUpdateCardType } from 'src/domain/types/entities/card/createOrUpdateCard-type';
+
 export type RegisterCardsDto = {
-  creditCardInfo: {
-    name: string;
-    nickname: string;
-    number: number;
-    securityCode: number;
-  }[];
+  creditCardInfo: CreateOrUpdateCardType[];
 };

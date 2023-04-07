@@ -1,9 +1,6 @@
-export type Card = {
-  id: string;
+export type UpdateCardDto = {
   name: string;
   nickname: string;
   number: number;
   securityCode: number;
-  createdAt: string;
-  updatedAt: string;
 };
