@@ -1,7 +1,7 @@
 import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
 
 export interface SqlQueryHelperInterface {
-  getSqlQuery(): string | void;
+  getSqlQuery(): string;
   setAction(actionName: sqlAction): void;
   setTable(tableName: string): void;
   setFields(fields: string[]): void;
