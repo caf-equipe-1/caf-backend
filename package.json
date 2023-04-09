@@ -14,7 +14,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "seed": "npm run build && node ./dist/infra/database/seed/seed.js"
+    "migrate": "npm run build && node ./dist/infra/database/migration/migration.js"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
