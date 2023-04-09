@@ -1,5 +1,5 @@
 export const cardTable: string = `
-    DROP TABLE IF EXISTS "card";
+    DROP TABLE IF EXISTS "card" CASCADE;
     CREATE TABLE "card"(
         id VARCHAR(50) PRIMARY KEY NOT NULL,
         name VARCHAR(100) NOT NULL,

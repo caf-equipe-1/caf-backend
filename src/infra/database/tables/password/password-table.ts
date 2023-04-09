@@ -1,5 +1,5 @@
 export const passwordTable: string = `
-    DROP TABLE IF EXISTS "password";
+    DROP TABLE IF EXISTS "password" CASCADE;
     CREATE TABLE "password"(
         id VARCHAR(50) PRIMARY KEY NOT NULL,
         name VARCHAR(100) NOT NULL,

@@ -1,5 +1,5 @@
 export const documentTable: string = `
-    DROP TABLE IF EXISTS "document";
+    DROP TABLE IF EXISTS "document" CASCADE;
     CREATE TABLE "document"(
         id VARCHAR(50) PRIMARY KEY NOT NULL,
         name VARCHAR(100) NOT NULL,
