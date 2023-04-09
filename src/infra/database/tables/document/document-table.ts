@@ -1,9 +1,9 @@
 export const documentTable: string = `
-    CREATE TABLE document(
-        id varchar(50),
-        name varchar(100),
-        document TEXT,
-        createdAt varchar(10),
-        updatedAt varchar(10)
+    CREATE TABLE Document(
+        id VARCHAR(50) PRIMARY KEY NOT NULL,
+        name VARCHAR(100) NOT NULL,
+        document TEXT NOT NULL,
+        createdAt VARCHAR(10) NOT NULL,
+        updatedAt VARCHAR(10) NOT NULL
     )
 `;

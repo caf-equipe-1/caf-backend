@@ -1,12 +1,12 @@
 export const userTable: string = `
     CREATE TABLE user(
-        id varchar(50),
-        name varchar(100),
-        email varchar(100),
-        password varchar(100),
+        id VARCHAR(50) PRIMARY KEY NOT NULL,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        password VARCHAR(100) NOT NULL,
         photo TEXT,
-        cpf varchar(11),
-        createdAt varchar(10),
-        updatedAt varchar(10)
+        cpf VARCHAR(11),
+        createdAt VARCHAR(10) NOT NULL,
+        updatedAt VARCHAR(10) NOT NULL
     )
 `;

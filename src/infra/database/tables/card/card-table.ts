@@ -1,11 +1,11 @@
 export const cardTable: string = `
-    CREATE TABLE card(
-        id varchar(50),
-        name varchar(100),
-        nickname varchar(100),
-        number INTEGER,
-        securityCode INTEGER,
-        createdAt varchar(10),
-        updatedAt varchar(10)
+    CREATE TABLE Card(
+        id VARCHAR(50) PRIMARY KEY NOT NULL,
+        name VARCHAR(100) NOT NULL,
+        nickname VARCHAR(100) NOT NULL,
+        number INTEGER NOT NULL,
+        securityCode INTEGER NOT NULL,
+        createdAt VARCHAR(10) NOT NULL,
+        updatedAt VARCHAR(10) NOT NULL
     )
 `;
