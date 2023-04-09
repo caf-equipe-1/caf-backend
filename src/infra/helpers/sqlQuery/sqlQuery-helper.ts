@@ -151,7 +151,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
       ? this.innerJoin
           .map(
             (element) =>
-              ` INNER JOIN ${element.table} ON ${element.table}.${element.field1} ${element.operator} ${table}.${element.field2}`,
+              ` INNER JOIN ${element.table} ON ${element.table}.${element.field1} ${element.operator} "${table}".${element.field2}`,
           )
           .join(' ')
       : '';
@@ -162,7 +162,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
       ? this.leftJoin
           .map(
             (element) =>
-              ` LEFT JOIN ${element.table} ON ${element.table}.${element.field1} ${element.operator} ${table}.${element.field2}`,
+              ` LEFT JOIN ${element.table} ON ${element.table}.${element.field1} ${element.operator} "${table}".${element.field2}`,
           )
           .join(' ')
       : '';
@@ -202,7 +202,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
       case 'SELECT':
         return `
                 SELECT ${fields}
-                    FROM ${table}
+                    FROM "${table}"
                     ${innerJoin}
                     ${leftJoin}
                 WHERE 1 = 1 ${where}
@@ -210,20 +210,20 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
 
       case 'INSERT':
         return `
-                INSERT INTO ${table}
+                INSERT INTO "${table}"
                 ${valueLabels}
                 VALUES ${valuesForInsertion}
             `;
 
       case 'DELETE':
         return `
-                DELETE FROM ${table}
+                DELETE FROM "${table}"
                 ${where}
             `;
 
       case 'UPDATE':
         return `
-                UPDATE ${table}
+                UPDATE "${table}"
                 SET ${valuesForUpdate}
                 WHERE 1 = 1 ${where}
             `;

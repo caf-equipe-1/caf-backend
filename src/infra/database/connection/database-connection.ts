@@ -1,12 +1,13 @@
 import { Client } from 'pg';
 import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connection/database-connection-interface';
+import { EnvVariables } from 'src/utils/env/envVariables-util';
 
 export class DatabaseConnection implements DatabaseConnectionInterface {
   private readonly client: Client;
 
   public constructor() {
     this.client = new Client({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: EnvVariables.getDatabaseUrl(),
     });
   }
 

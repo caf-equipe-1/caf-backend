@@ -1,5 +1,6 @@
 export const documentTable: string = `
-    CREATE TABLE Document(
+    DROP TABLE IF EXISTS "document";
+    CREATE TABLE "document"(
         id VARCHAR(50) PRIMARY KEY NOT NULL,
         name VARCHAR(100) NOT NULL,
         document TEXT NOT NULL,

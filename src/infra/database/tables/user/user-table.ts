@@ -1,5 +1,6 @@
 export const userTable: string = `
-    CREATE TABLE user(
+    DROP TABLE IF EXISTS "user";
+    CREATE TABLE "user"(
         id VARCHAR(50) PRIMARY KEY NOT NULL,
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL,

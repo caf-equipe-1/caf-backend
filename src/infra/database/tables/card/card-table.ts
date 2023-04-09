@@ -1,5 +1,6 @@
 export const cardTable: string = `
-    CREATE TABLE Card(
+    DROP TABLE IF EXISTS "card";
+    CREATE TABLE "card"(
         id VARCHAR(50) PRIMARY KEY NOT NULL,
         name VARCHAR(100) NOT NULL,
         nickname VARCHAR(100) NOT NULL,
