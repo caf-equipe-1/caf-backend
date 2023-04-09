@@ -7,7 +7,7 @@ async function bootstrap() {
 
   app.enableCors();
 
-  await app.listen(EnvVariables.getPort() || 7777);
+  await app.listen(EnvVariables.getPort());
 }
 
 bootstrap();
