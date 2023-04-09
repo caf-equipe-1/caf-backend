@@ -44,7 +44,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     this.whereRaw = '';
   }
 
-  public getSqlQuery(): string | void {
+  public getSqlQuery(): string {
     return this.generateSql();
   }
 
@@ -118,7 +118,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     this.whereRaw = where;
   }
 
-  private generateSql(): string | void {
+  private generateSql(): string {
     const tableDefined = this.table.trim() !== '';
     const actionDefined = this.action.trim() !== '';
     const fieldsDefined = this.fields.length > 0;
@@ -133,7 +133,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     const whereRawDefined = this.whereRaw.trim() !== '';
 
     if (!tableDefined || !actionDefined) {
-      return;
+      return '';
     }
 
     const table = this.table;
