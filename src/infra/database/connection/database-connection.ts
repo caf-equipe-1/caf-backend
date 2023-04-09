@@ -11,11 +11,23 @@ export class DatabaseConnection implements DatabaseConnectionInterface {
   }
 
   public async connect(): Promise<void> {
-    return await this.client.connect();
+    return await this.client.connect().then(() => {
+      this.client.query('BEGIN');
+    });
   }
 
-  public async disconnect(): Promise<void> {
-    return await this.client.end();
+  public async disconnect(rollback: boolean): Promise<void> {
+    switch (rollback) {
+      case true:
+        return await this.client.query('ROLLBACK').then(() => {
+          this.client.end();
+        });
+
+      default:
+        return await this.client.query('COMMIT').then(() => {
+          this.client.end();
+        });
+    }
   }
 
   public async executeSqlQuery(sqlQuery: string): Promise<any> {
