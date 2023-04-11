@@ -11,7 +11,7 @@ export class GetOneUserUsecase implements GetOneUserUsecaseInterface {
   }
 
   public async execute(userId: string): Promise<User> {
-    const found = await this.userRepository.getOne(userId);
+    const found = await this.userRepository.getOneById(userId);
 
     if (!found) {
       throw new InvalidParamError('Id');
