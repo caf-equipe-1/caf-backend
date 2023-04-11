@@ -2,9 +2,10 @@ import { User } from 'src/domain/entities/user/user-entity';
 import { UserType } from 'src/domain/types/entities/user/user-type';
 import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connection/database-connection-interface';
 import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
+import { UserRepositoryInterface } from 'src/infra/abstract/repositories/user/user-repository-interface';
 import { SqlQueryHelper } from 'src/infra/helpers/sqlQuery/sqlQuery-helper';
 
-export class UserRepository {
+export class UserRepository implements UserRepositoryInterface {
   private readonly database: DatabaseConnectionInterface;
 
   public constructor(database: DatabaseConnectionInterface) {
@@ -41,7 +42,7 @@ export class UserRepository {
     this.database.disconnect(false);
   }
 
-  public async getOne(userId: string): Promise<User> {
+  public async getOneById(userId: string): Promise<User> {
     this.database.connect();
 
     try {
@@ -49,6 +50,54 @@ export class UserRepository {
       userSearchQuery.setTable('user');
       userSearchQuery.setAction(sqlAction.SELECT);
       userSearchQuery.setWhere([{ field: 'id', operator: '=', value: userId }]);
+
+      const foundUser = await this.database.executeSqlQuery(
+        userSearchQuery.getSqlQuery(),
+      );
+
+      return foundUser;
+    } catch (error) {
+      console.log(error);
+      this.database.disconnect(true);
+    }
+
+    this.database.disconnect(false);
+  }
+
+  public async getOneByCpf(userCnpj: string): Promise<User> {
+    this.database.connect();
+
+    try {
+      const userSearchQuery = new SqlQueryHelper();
+      userSearchQuery.setTable('user');
+      userSearchQuery.setAction(sqlAction.SELECT);
+      userSearchQuery.setWhere([
+        { field: 'cnpj', operator: '=', value: userCnpj },
+      ]);
+
+      const foundUser = await this.database.executeSqlQuery(
+        userSearchQuery.getSqlQuery(),
+      );
+
+      return foundUser;
+    } catch (error) {
+      console.log(error);
+      this.database.disconnect(true);
+    }
+
+    this.database.disconnect(false);
+  }
+
+  public async getOneByEmail(userEmail: string): Promise<User> {
+    this.database.connect();
+
+    try {
+      const userSearchQuery = new SqlQueryHelper();
+      userSearchQuery.setTable('user');
+      userSearchQuery.setAction(sqlAction.SELECT);
+      userSearchQuery.setWhere([
+        { field: 'email', operator: '=', value: userEmail },
+      ]);
 
       const foundUser = await this.database.executeSqlQuery(
         userSearchQuery.getSqlQuery(),
