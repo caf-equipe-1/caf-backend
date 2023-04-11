@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 
 @Controller()
-export class AppController {
+export class MainController {
   @Get()
   getStatus(): string {
     return 'Server is running...';
