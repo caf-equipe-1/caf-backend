@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { makeCreateAppControllerFactory } from 'src/main/factories/controllers/app/createAppController-factory';
 import { makeDeleteAppControllerFactory } from 'src/main/factories/controllers/app/deleteAppController-factory';
 import { makeGetAppControllerFactory } from 'src/main/factories/controllers/app/getAppController-factory';
@@ -8,6 +13,7 @@ import { DeleteAppController } from 'src/presentation/controllers/app/deleteApp-
 import { GetAppController } from 'src/presentation/controllers/app/getApp-controller';
 import { UpdateAppController } from 'src/presentation/controllers/app/updateApp-controller';
 import { AppController } from '../../controllers/app/app.controller';
+import { AuthMiddleware } from '../../middlewares/auth.middleware';
 
 @Module({
   controllers: [AppController],
@@ -30,4 +36,8 @@ import { AppController } from '../../controllers/app/app.controller';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+}

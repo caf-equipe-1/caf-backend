@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { makeCreatePasswordControllerFactory } from 'src/main/factories/controllers/password/createPasswordController-factory';
 import { makeDeletePasswordControllerFactory } from 'src/main/factories/controllers/password/deletePasswordController-factory';
 import { makeGetPasswordControllerFactory } from 'src/main/factories/controllers/password/getPasswordController-factory';
@@ -8,6 +13,7 @@ import { DeletePasswordController } from 'src/presentation/controllers/password/
 import { GetPasswordController } from 'src/presentation/controllers/password/getPassword-controller';
 import { UpdatePasswordController } from 'src/presentation/controllers/password/updatePassword-controller';
 import { PasswordController } from '../../controllers/password/password.controller';
+import { AuthMiddleware } from '../../middlewares/auth.middleware';
 
 @Module({
   controllers: [PasswordController],
@@ -30,4 +36,8 @@ import { PasswordController } from '../../controllers/password/password.controll
     },
   ],
 })
-export class PasswordModule {}
+export class PasswordModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+}

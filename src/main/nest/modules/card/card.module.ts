@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { makeCreateCardControllerFactory } from 'src/main/factories/controllers/card/createCardController-factory';
 import { makeDeleteCardControllerFactory } from 'src/main/factories/controllers/card/deleteCardController-factory';
 import { makeGetCardControllerFactory } from 'src/main/factories/controllers/card/getCardController-factory';
@@ -8,6 +13,7 @@ import { DeleteCardController } from 'src/presentation/controllers/card/deleteCa
 import { GetCardController } from 'src/presentation/controllers/card/getCard-controller';
 import { UpdateCardController } from 'src/presentation/controllers/card/updateCard-controller';
 import { CardController } from '../../controllers/card/card.controller';
+import { AuthMiddleware } from '../../middlewares/auth.middleware';
 
 @Module({
   controllers: [CardController],
@@ -30,4 +36,8 @@ import { CardController } from '../../controllers/card/card.controller';
     },
   ],
 })
-export class CardModule {}
+export class CardModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+}

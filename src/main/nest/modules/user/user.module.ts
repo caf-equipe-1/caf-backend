@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { makeCreateUserControllerFactory } from 'src/main/factories/controllers/user/createUserController-factory';
 import { makeDeleteUserControllerFactory } from 'src/main/factories/controllers/user/deleteUserController-factory';
 import { makeGetUserControllerFactory } from 'src/main/factories/controllers/user/getUserController-factory';
@@ -8,6 +13,7 @@ import { DeleteUserController } from 'src/presentation/controllers/user/deleteUs
 import { GetUserController } from 'src/presentation/controllers/user/getUser-controller';
 import { UpdateUserController } from 'src/presentation/controllers/user/updateUser-controller';
 import { UserController } from '../../controllers/user/user.controller';
+import { AuthMiddleware } from '../../middlewares/auth.middleware';
 
 @Module({
   controllers: [UserController],
@@ -30,4 +36,11 @@ import { UserController } from '../../controllers/user/user.controller';
     },
   ],
 })
-export class UserModule {}
+export class UserModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude({ path: '/*', method: RequestMethod.POST })
+      .forRoutes('*');
+  }
+}
