@@ -14,8 +14,8 @@ import { CreateDocumentController } from 'src/presentation/controllers/document/
 import { DeleteDocumentController } from 'src/presentation/controllers/document/deleteDocument-controller';
 import { GetDocumentController } from 'src/presentation/controllers/document/getDocument-controller';
 import { UpdateDocumentController } from 'src/presentation/controllers/document/updateDocument-controller';
-@ApiTags('Document')
-@Controller('/document')
+@ApiTags('Documents')
+@Controller('/documents')
 export class DocumentController {
   public constructor(
     private readonly createDocumentController: CreateDocumentController,

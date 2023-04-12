@@ -14,8 +14,8 @@ import { CreateCardController } from 'src/presentation/controllers/card/createCa
 import { DeleteCardController } from 'src/presentation/controllers/card/deleteCard-controller';
 import { GetCardController } from 'src/presentation/controllers/card/getCard-controller';
 import { UpdateCardController } from 'src/presentation/controllers/card/updateCard-controller';
-@ApiTags('Card')
-@Controller('/card')
+@ApiTags('Cards')
+@Controller('/cards')
 export class CardController {
   public constructor(
     private readonly createCardController: CreateCardController,

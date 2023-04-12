@@ -16,8 +16,8 @@ import { DeleteUserController } from 'src/presentation/controllers/user/deleteUs
 import { GetUserController } from 'src/presentation/controllers/user/getUser-controller';
 import { UpdateUserController } from 'src/presentation/controllers/user/updateUser-controller';
 
-@ApiTags('User')
-@Controller('/user')
+@ApiTags('Users')
+@Controller('/users')
 export class UserController {
   public constructor(
     private readonly createUserController: CreateUserController,

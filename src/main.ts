@@ -13,11 +13,11 @@ async function bootstrap() {
       'APi with nestJs as a framework and typescript as main development language',
     )
     .setVersion('1.0')
-    .addTag('Document')
-    .addTag('App')
-    .addTag('User')
-    .addTag('Password')
-    .addTag('Card')
+    .addTag('Documents')
+    .addTag('Apps')
+    .addTag('Users')
+    .addTag('Passwords')
+    .addTag('Cards')
 
     .build();
   const document = SwaggerModule.createDocument(app, config);
