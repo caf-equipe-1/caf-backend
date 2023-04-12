@@ -7,9 +7,10 @@ import { CreateUserController } from 'src/presentation/controllers/user/createUs
 import { DeleteUserController } from 'src/presentation/controllers/user/deleteUser-controller';
 import { GetUserController } from 'src/presentation/controllers/user/getUser-controller';
 import { UpdateUserController } from 'src/presentation/controllers/user/updateUser-controller';
+import { UserController } from '../../controllers/user/user.controller';
 
 @Module({
-  controllers: [],
+  controllers: [UserController],
   providers: [
     {
       provide: CreateUserController,

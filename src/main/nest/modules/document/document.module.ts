@@ -7,9 +7,10 @@ import { CreateDocumentController } from 'src/presentation/controllers/document/
 import { DeleteDocumentController } from 'src/presentation/controllers/document/deleteDocument-controller';
 import { GetDocumentController } from 'src/presentation/controllers/document/getDocument-controller';
 import { UpdateDocumentController } from 'src/presentation/controllers/document/updateDocument-controller';
+import { DocumentController } from '../../controllers/document/document.controller';
 
 @Module({
-  controllers: [],
+  controllers: [DocumentController],
   providers: [
     {
       provide: CreateDocumentController,

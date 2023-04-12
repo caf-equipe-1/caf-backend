@@ -7,9 +7,10 @@ import { CreatePasswordController } from 'src/presentation/controllers/password/
 import { DeletePasswordController } from 'src/presentation/controllers/password/deletePassword-controller';
 import { GetPasswordController } from 'src/presentation/controllers/password/getPassword-controller';
 import { UpdatePasswordController } from 'src/presentation/controllers/password/updatePassword-controller';
+import { PasswordController } from '../../controllers/password/password.controller';
 
 @Module({
-  controllers: [],
+  controllers: [PasswordController],
   providers: [
     {
       provide: CreatePasswordController,

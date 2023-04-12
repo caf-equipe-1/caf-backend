@@ -7,9 +7,10 @@ import { CreateCardController } from 'src/presentation/controllers/card/createCa
 import { DeleteCardController } from 'src/presentation/controllers/card/deleteCard-controller';
 import { GetCardController } from 'src/presentation/controllers/card/getCard-controller';
 import { UpdateCardController } from 'src/presentation/controllers/card/updateCard-controller';
+import { CardController } from '../../controllers/card/card.controller';
 
 @Module({
-  controllers: [],
+  controllers: [CardController],
   providers: [
     {
       provide: CreateCardController,
