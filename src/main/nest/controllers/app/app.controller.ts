@@ -7,13 +7,14 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { CreateOrUpdateAppType } from 'src/domain/types/entities/app/createOrUpdateApp-type';
 import { CreateAppController } from 'src/presentation/controllers/app/createApp-controller';
 import { DeleteAppController } from 'src/presentation/controllers/app/deleteApp-controller';
 import { GetAppController } from 'src/presentation/controllers/app/getApp-controller';
 import { UpdateAppController } from 'src/presentation/controllers/app/updateApp-controller';
-
+@ApiTags('App')
 @Controller('/app')
 export class AppController {
   public constructor(
@@ -52,14 +53,14 @@ export class AppController {
   public async delete(@Param('id') id: string, @Body() body: any) {
     const requestBody: any = body;
     const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId, id };
+    const httpRequest: HttpRequest<object> = { userId, id };
 
     return await this.deleteAppController.execute(httpRequest);
   }
 
   @Get(':id')
   public async getOne(@Param('id') id: string) {
-    const httpRequest: HttpRequest<{}> = { id };
+    const httpRequest: HttpRequest<object> = { id };
 
     return await this.getAppController.execute(httpRequest);
   }
@@ -68,7 +69,7 @@ export class AppController {
   public async getAll(@Body() body: any) {
     const requestBody: any = body;
     const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId };
+    const httpRequest: HttpRequest<object> = { userId };
 
     return await this.getAppController.execute(httpRequest);
   }

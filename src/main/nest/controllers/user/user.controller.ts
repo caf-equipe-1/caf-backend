@@ -16,7 +16,7 @@ import { DeleteUserController } from 'src/presentation/controllers/user/deleteUs
 import { GetUserController } from 'src/presentation/controllers/user/getUser-controller';
 import { UpdateUserController } from 'src/presentation/controllers/user/updateUser-controller';
 
-@ApiTags('user')
+@ApiTags('User')
 @Controller('/user')
 export class UserController {
   public constructor(

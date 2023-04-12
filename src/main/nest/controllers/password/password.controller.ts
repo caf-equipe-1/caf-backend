@@ -7,13 +7,14 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { CreateOrUpdatePasswordType } from 'src/domain/types/entities/password/createOrUpdatePassword-type';
 import { CreatePasswordController } from 'src/presentation/controllers/password/createPassword-controller';
 import { DeletePasswordController } from 'src/presentation/controllers/password/deletePassword-controller';
 import { GetPasswordController } from 'src/presentation/controllers/password/getPassword-controller';
 import { UpdatePasswordController } from 'src/presentation/controllers/password/updatePassword-controller';
-
+@ApiTags('Password')
 @Controller('/password')
 export class PasswordController {
   public constructor(
@@ -55,14 +56,14 @@ export class PasswordController {
   public async delete(@Param('id') id: string, @Body() body: any) {
     const requestBody: any = body;
     const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId, id };
+    const httpRequest: HttpRequest<object> = { userId, id };
 
     return await this.deletePasswordController.execute(httpRequest);
   }
 
   @Get(':id')
   public async getOne(@Param('id') id: string) {
-    const httpRequest: HttpRequest<{}> = { id };
+    const httpRequest: HttpRequest<object> = { id };
 
     return await this.getPasswordController.execute(httpRequest);
   }
@@ -71,7 +72,7 @@ export class PasswordController {
   public async getAll(@Body() body: any) {
     const requestBody: any = body;
     const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId };
+    const httpRequest: HttpRequest<object> = { userId };
 
     return await this.getPasswordController.execute(httpRequest);
   }
