@@ -26,19 +26,14 @@ export class UserController {
 
   @Post()
   public async create(@Body() body: CreateProfileDto) {
-    const requestBody: any = body;
-    const userId = requestBody.userId;
-    const httpRequest: HttpRequest<CreateProfileDto> = { userId, body };
+    const httpRequest: HttpRequest<CreateProfileDto> = { body };
 
     return await this.createUserController.execute(httpRequest);
   }
 
   @Patch(':id')
   public async update(@Param('id') id: string, @Body() body: UpdateProfileDto) {
-    const requestBody: any = body;
-    const userId = requestBody.userId;
     const httpRequest: HttpRequest<UpdateProfileDto> = {
-      userId,
       id,
       body,
     };
@@ -47,10 +42,8 @@ export class UserController {
   }
 
   @Delete(':id')
-  public async delete(@Param('id') id: string, @Body() body: any) {
-    const requestBody: any = body;
-    const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId, id };
+  public async delete(@Param('id') id: string) {
+    const httpRequest: HttpRequest<{}> = { id };
 
     return await this.deleteUserController.execute(httpRequest);
   }
@@ -58,15 +51,6 @@ export class UserController {
   @Get(':id')
   public async getOne(@Param('id') id: string) {
     const httpRequest: HttpRequest<{}> = { id };
-
-    return await this.getUserController.execute(httpRequest);
-  }
-
-  @Get()
-  public async getAll(@Body() body: any) {
-    const requestBody: any = body;
-    const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId };
 
     return await this.getUserController.execute(httpRequest);
   }
