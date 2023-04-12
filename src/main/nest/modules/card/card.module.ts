@@ -38,6 +38,6 @@ import { AuthMiddleware } from '../../middlewares/auth.middleware';
 })
 export class CardModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('*');
+    consumer.apply(AuthMiddleware).forRoutes('/cards');
   }
 }
