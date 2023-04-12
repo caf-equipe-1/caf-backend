@@ -21,7 +21,7 @@ export class UpdateUserUsecase implements UpdateUserUsecaseInterface {
     userId: string,
     userDto: UpdateProfileDto,
   ): Promise<User> {
-    const found = await this.userRepository.getOne(userId);
+    const found = await this.userRepository.getOneById(userId);
 
     if (!found) {
       throw new InvalidParamError('Id');
