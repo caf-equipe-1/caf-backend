@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { CreateProfileDto } from 'src/domain/dtos/registration/createProfile-dto';
 import { UpdateProfileDto } from 'src/domain/dtos/registration/updateProfile-dto';
@@ -15,6 +16,7 @@ import { DeleteUserController } from 'src/presentation/controllers/user/deleteUs
 import { GetUserController } from 'src/presentation/controllers/user/getUser-controller';
 import { UpdateUserController } from 'src/presentation/controllers/user/updateUser-controller';
 
+@ApiTags('user')
 @Controller('/user')
 export class UserController {
   public constructor(
@@ -43,14 +45,14 @@ export class UserController {
 
   @Delete(':id')
   public async delete(@Param('id') id: string) {
-    const httpRequest: HttpRequest<{}> = { id };
+    const httpRequest: HttpRequest<object> = { id };
 
     return await this.deleteUserController.execute(httpRequest);
   }
 
   @Get(':id')
   public async getOne(@Param('id') id: string) {
-    const httpRequest: HttpRequest<{}> = { id };
+    const httpRequest: HttpRequest<object> = { id };
 
     return await this.getUserController.execute(httpRequest);
   }
