@@ -43,7 +43,7 @@ export class UserRepository implements UserRepositoryInterface {
         userCreationQuery.getSqlQuery(),
       );
 
-      return createdUser;
+      return createdUser[0];
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -65,7 +65,7 @@ export class UserRepository implements UserRepositoryInterface {
         userSearchQuery.getSqlQuery(),
       );
 
-      return foundUser;
+      return foundUser[0];
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -89,7 +89,7 @@ export class UserRepository implements UserRepositoryInterface {
         userSearchQuery.getSqlQuery(),
       );
 
-      return foundUser;
+      return foundUser[0];
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -108,12 +108,11 @@ export class UserRepository implements UserRepositoryInterface {
       userSearchQuery.setWhere([
         { field: 'email', operator: '=', value: userEmail },
       ]);
-
       const foundUser = await this.database.executeSqlQuery(
         userSearchQuery.getSqlQuery(),
       );
 
-      return foundUser;
+      return foundUser[0];
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -151,12 +150,22 @@ export class UserRepository implements UserRepositoryInterface {
       userDeleteQuery.setTable('user');
       userDeleteQuery.setAction(sqlAction.DELETE);
       userDeleteQuery.setWhere([{ field: 'id', operator: '=', value: userId }]);
+      userDeleteQuery.setReturn([
+        'id',
+        'name',
+        'email',
+        'password',
+        'photo',
+        'cpf',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const deletedUser = await this.database.executeSqlQuery(
         userDeleteQuery.getSqlQuery(),
       );
 
-      return deletedUser;
+      return deletedUser[0];
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -182,6 +191,16 @@ export class UserRepository implements UserRepositoryInterface {
         { field: 'cpf', value: userData.cpf },
         { field: 'createdAt', value: userData.createdAt },
         { field: 'updatedAt', value: userData.updatedAt },
+      ]);
+      userUpdateQuery.setReturn([
+        'id',
+        'name',
+        'email',
+        'password',
+        'photo',
+        'cpf',
+        'createdAt',
+        'updatedAt',
       ]);
 
       const updatedUser = await this.database.executeSqlQuery(
