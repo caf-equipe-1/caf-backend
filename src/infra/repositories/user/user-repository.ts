@@ -29,6 +29,16 @@ export class UserRepository implements UserRepositoryInterface {
         { field: 'createdAt', value: userData.createdAt },
         { field: 'updatedAt', value: userData.updatedAt },
       ]);
+      userCreationQuery.setReturn([
+        'id',
+        'name',
+        'email',
+        'password',
+        'photo',
+        'cpf',
+        'createdAt',
+        'updatedAt',
+      ]);
       const createdUser = await this.database.executeSqlQuery(
         userCreationQuery.getSqlQuery(),
       );
