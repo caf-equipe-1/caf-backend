@@ -13,6 +13,8 @@ async function bootstrap() {
       'APi with nestJs as a framework and typescript as main development language',
     )
     .setVersion('1.0')
+    .addTag('EmailLogin')
+    .addTag('SelfieLogin')
     .addTag('Documents')
     .addTag('Apps')
     .addTag('Users')
