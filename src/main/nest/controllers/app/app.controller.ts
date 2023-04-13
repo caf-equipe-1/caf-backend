@@ -14,6 +14,7 @@ import { CreateAppController } from 'src/presentation/controllers/app/createApp-
 import { DeleteAppController } from 'src/presentation/controllers/app/deleteApp-controller';
 import { GetAppController } from 'src/presentation/controllers/app/getApp-controller';
 import { UpdateAppController } from 'src/presentation/controllers/app/updateApp-controller';
+
 @ApiTags('Apps')
 @Controller('/apps')
 export class AppController {

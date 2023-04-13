@@ -14,6 +14,7 @@ import { CreatePasswordController } from 'src/presentation/controllers/password/
 import { DeletePasswordController } from 'src/presentation/controllers/password/deletePassword-controller';
 import { GetPasswordController } from 'src/presentation/controllers/password/getPassword-controller';
 import { UpdatePasswordController } from 'src/presentation/controllers/password/updatePassword-controller';
+
 @ApiTags('Passwords')
 @Controller('/passwords')
 export class PasswordController {
