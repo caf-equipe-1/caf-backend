@@ -28,6 +28,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     value: string | number | boolean;
   }[];
   private whereRaw: string;
+  private returning: string[];
 
   public constructor() {
     this.table = '';
@@ -42,6 +43,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     this.valuesRaw = '';
     this.where = [];
     this.whereRaw = '';
+    this.returning = [];
   }
 
   public getSqlQuery(): string {
@@ -118,6 +120,10 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     this.whereRaw = where;
   }
 
+  public setReturn(fieldNames: string[]): void {
+    this.returning = fieldNames;
+  }
+
   private generateSql(): string {
     const tableDefined = this.table.trim() !== '';
     const actionDefined = this.action.trim() !== '';
@@ -131,6 +137,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     const valuesRawDefined = this.valuesRaw.trim() !== '';
     const whereDefined = this.where.length > 0;
     const whereRawDefined = this.whereRaw.trim() !== '';
+    const returningDefined = this.returning.length > 0;
 
     if (!tableDefined || !actionDefined) {
       return '';
@@ -176,14 +183,19 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     const valuesForInsertion = valuesRawDefined
       ? this.valuesRaw
       : valuesDefined
-      ? this.values.map((element) => ` ${element.value}`).join(', ')
+      ? this.values
+          .map((element) => ` ${this.setValueType(element.value)}`)
+          .join(', ')
       : '';
 
     const valuesForUpdate = valuesRawDefined
       ? this.valuesRaw
       : valuesDefined
       ? this.values
-          .map((element) => ` ${element.field} = ${element.value}`)
+          .map(
+            (element) =>
+              ` ${element.field} = ${this.setValueType(element.value)}`,
+          )
           .join(', ')
       : '';
 
@@ -193,9 +205,15 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
       ? this.where
           .map(
             (element) =>
-              ` AND ${element.field} ${element.operator} ${element.value}`,
+              ` AND ${element.field} ${element.operator} ${this.setValueType(
+                element.value,
+              )}`,
           )
           .join(', ')
+      : '';
+
+    const returning = returningDefined
+      ? ` RETURNING ${this.returning.join(',')} `
       : '';
 
     switch (this.action) {
@@ -205,20 +223,22 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
                     FROM "${table}"
                     ${innerJoin}
                     ${leftJoin}
-                WHERE 1 = 1 ${where}
+                WHERE 1 = 1 ${where};
             `;
 
       case 'INSERT':
         return `
                 INSERT INTO "${table}"
-                ${valueLabels}
-                VALUES ${valuesForInsertion}
+                (${valueLabels})
+                VALUES (${valuesForInsertion})
+                ${returning};
             `;
 
       case 'DELETE':
         return `
                 DELETE FROM "${table}"
-                ${where}
+                WHERE 1 = 1 ${where}
+                ${returning};
             `;
 
       case 'UPDATE':
@@ -226,7 +246,18 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
                 UPDATE "${table}"
                 SET ${valuesForUpdate}
                 WHERE 1 = 1 ${where}
+                ${returning};
             `;
+    }
+  }
+
+  private setValueType(value: any) {
+    switch (typeof value) {
+      case 'string':
+        return `'${value}'`;
+
+      default:
+        return value;
     }
   }
 }

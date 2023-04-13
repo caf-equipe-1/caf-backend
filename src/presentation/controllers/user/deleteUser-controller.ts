@@ -12,9 +12,11 @@ export class DeleteUserController implements DeleteUserControllerInterface {
     this.deleteUserUsecase = deleteUserUsecase;
   }
 
-  public async execute(request: HttpRequest<{}>): Promise<HttpResponse<User>> {
+  public async execute(request: HttpRequest<any>): Promise<HttpResponse<User>> {
     try {
-      const deletedUser = await this.deleteUserUsecase.execute(request.userId);
+      const deletedUser = await this.deleteUserUsecase.execute(
+        request.id || '',
+      );
 
       return Response.ok(deletedUser);
     } catch (error) {

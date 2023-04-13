@@ -22,11 +22,13 @@ export class GetUserController implements GetUserControllerInterface {
 
   public async execute(request: HttpRequest<{}>): Promise<HttpResponse<User>> {
     try {
-      const getOne = request.hasOwnProperty('userId');
+      const getOne = request.hasOwnProperty('id');
 
       switch (true) {
         case getOne:
-          const foundUser = this.getOneUserUsecase.execute(request.id);
+          const foundUser = await this.getOneUserUsecase.execute(
+            request.id || '',
+          );
           return Response.ok(foundUser);
 
         default:

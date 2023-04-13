@@ -29,7 +29,7 @@ class Migration {
                     database.executeSqlQuery(userCardTable).then(() => {
                       database.executeSqlQuery(userAppTable).then(() => {
                         database.disconnect(false).then(() => {
-                          console.log('Seed executed');
+                          console.log('Migration executed');
                           return;
                         });
                       });

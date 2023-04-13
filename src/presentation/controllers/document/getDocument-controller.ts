@@ -28,13 +28,15 @@ export class GetDocumentController implements GetDocumentControllerInterface {
 
       switch (true) {
         case getAll:
-          const foundDocuments = this.getAllDocumentsUseCase.execute(
+          const foundDocuments = await this.getAllDocumentsUseCase.execute(
             request.userId,
           );
           return Response.ok(foundDocuments);
 
         case getOne:
-          const foundDocument = this.getOneDocumentUsecase.execute(request.id);
+          const foundDocument = await this.getOneDocumentUsecase.execute(
+            request.id,
+          );
           return Response.ok(foundDocument);
 
         default:

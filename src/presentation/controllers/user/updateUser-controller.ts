@@ -27,7 +27,7 @@ export class UpdateUserController implements UpdateUserControllerInterface {
       }
 
       const updatedUser = await this.updateUserUsecase.execute(
-        request.userId,
+        request.id || '',
         request.body,
       );
 

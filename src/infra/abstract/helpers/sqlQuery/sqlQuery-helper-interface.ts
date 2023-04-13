@@ -36,4 +36,5 @@ export interface SqlQueryHelperInterface {
     }[],
   ): void;
   setWhereRaw(where: string): void;
+  setReturn(fieldNames: string[]): void;
 }

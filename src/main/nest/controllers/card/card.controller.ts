@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { CreateOrUpdateCardType } from 'src/domain/types/entities/card/createOrUpdateCard-type';
 import { CreateCardController } from 'src/presentation/controllers/card/createCard-controller';
@@ -14,7 +15,8 @@ import { DeleteCardController } from 'src/presentation/controllers/card/deleteCa
 import { GetCardController } from 'src/presentation/controllers/card/getCard-controller';
 import { UpdateCardController } from 'src/presentation/controllers/card/updateCard-controller';
 
-@Controller('/card')
+@ApiTags('Cards')
+@Controller('/cards')
 export class CardController {
   public constructor(
     private readonly createCardController: CreateCardController,
@@ -52,14 +54,14 @@ export class CardController {
   public async delete(@Param('id') id: string, @Body() body: any) {
     const requestBody: any = body;
     const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId, id };
+    const httpRequest: HttpRequest<object> = { userId, id };
 
     return await this.deleteCardController.execute(httpRequest);
   }
 
   @Get(':id')
   public async getOne(@Param('id') id: string) {
-    const httpRequest: HttpRequest<{}> = { id };
+    const httpRequest: HttpRequest<object> = { id };
 
     return await this.getCardController.execute(httpRequest);
   }
@@ -68,7 +70,7 @@ export class CardController {
   public async getAll(@Body() body: any) {
     const requestBody: any = body;
     const userId = requestBody.userId;
-    const httpRequest: HttpRequest<{}> = { userId };
+    const httpRequest: HttpRequest<object> = { userId };
 
     return await this.getCardController.execute(httpRequest);
   }

@@ -4,11 +4,16 @@ import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connect
 import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
 import { CardRepositoryInterface } from 'src/infra/abstract/repositories/card/card-repository-interface';
 import { SqlQueryHelper } from 'src/infra/helpers/sqlQuery/sqlQuery-helper';
+import { Repository } from '../repository/repository';
 
-export class CardRepository implements CardRepositoryInterface {
+export class CardRepository
+  extends Repository
+  implements CardRepositoryInterface
+{
   private readonly database: DatabaseConnectionInterface;
 
   public constructor(database: DatabaseConnectionInterface) {
+    super();
     this.database = database;
   }
 
@@ -28,6 +33,16 @@ export class CardRepository implements CardRepositoryInterface {
         { field: 'createdAt', value: cardData.createdAt },
         { field: 'updatedAt', value: cardData.updatedAt },
       ]);
+      cardCreationQuery.setReturn([
+        'id',
+        'name',
+        'nickname',
+        'number',
+        'securityCode',
+        'createdAt',
+        'updatedAt',
+      ]);
+
       const createdCard = await this.database.executeSqlQuery(
         cardCreationQuery.getSqlQuery(),
       );
@@ -37,12 +52,12 @@ export class CardRepository implements CardRepositoryInterface {
       userCardRelationQuery.setAction(sqlAction.INSERT);
       userCardRelationQuery.setValues([
         { field: 'userId', value: userId },
-        { field: 'cardId', value: createdCard.id },
+        { field: 'cardId', value: createdCard[0].id },
       ]);
 
       await this.database.executeSqlQuery(userCardRelationQuery.getSqlQuery());
 
-      return createdCard;
+      return this.adaptProperties(createdCard[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -64,7 +79,7 @@ export class CardRepository implements CardRepositoryInterface {
         cardSearchQuery.getSqlQuery(),
       );
 
-      return foundCard;
+      return this.adaptProperties(foundCard[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -91,7 +106,9 @@ export class CardRepository implements CardRepositoryInterface {
         cardSearchQuery.getSqlQuery(),
       );
 
-      return foundCards;
+      return foundCards.map((item: any) =>
+        this.adaptProperties({ ...item, id: item.cardid }),
+      );
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -108,12 +125,21 @@ export class CardRepository implements CardRepositoryInterface {
       cardDeleteQuery.setTable('card');
       cardDeleteQuery.setAction(sqlAction.DELETE);
       cardDeleteQuery.setWhere([{ field: 'id', operator: '=', value: cardId }]);
+      cardDeleteQuery.setReturn([
+        'id',
+        'name',
+        'nickname',
+        'number',
+        'securityCode',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const deletedCard = await this.database.executeSqlQuery(
         cardDeleteQuery.getSqlQuery(),
       );
 
-      return deletedCard;
+      return this.adaptProperties(deletedCard[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -139,12 +165,21 @@ export class CardRepository implements CardRepositoryInterface {
         { field: 'createdAt', value: cardData.createdAt },
         { field: 'updatedAt', value: cardData.updatedAt },
       ]);
+      cardUpdateQuery.setReturn([
+        'id',
+        'name',
+        'nickname',
+        'number',
+        'securityCode',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const updatedCard = await this.database.executeSqlQuery(
         cardUpdateQuery.getSqlQuery(),
       );
 
-      return updatedCard;
+      return this.adaptProperties(updatedCard[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
