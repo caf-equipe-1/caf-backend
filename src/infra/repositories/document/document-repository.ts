@@ -4,11 +4,16 @@ import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connect
 import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
 import { DocumentRepositoryInterface } from 'src/infra/abstract/repositories/document/document-repository-interface';
 import { SqlQueryHelper } from 'src/infra/helpers/sqlQuery/sqlQuery-helper';
+import { Repository } from '../repository/repository';
 
-export class DocumentRepository implements DocumentRepositoryInterface {
+export class DocumentRepository
+  extends Repository
+  implements DocumentRepositoryInterface
+{
   private readonly database: DatabaseConnectionInterface;
 
   public constructor(database: DatabaseConnectionInterface) {
+    super();
     this.database = database;
   }
 
@@ -32,20 +37,27 @@ export class DocumentRepository implements DocumentRepositoryInterface {
       const createdDocument = await this.database.executeSqlQuery(
         documentCreationQuery.getSqlQuery(),
       );
+      createdDocument.setReturn([
+        'id',
+        'name',
+        'document',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const userDocumentRelationQuery = new SqlQueryHelper();
       userDocumentRelationQuery.setTable('user_document');
       userDocumentRelationQuery.setAction(sqlAction.INSERT);
       userDocumentRelationQuery.setValues([
         { field: 'userId', value: userId },
-        { field: 'documentId', value: createdDocument.id },
+        { field: 'documentId', value: createdDocument[0].id },
       ]);
 
       await this.database.executeSqlQuery(
         userDocumentRelationQuery.getSqlQuery(),
       );
 
-      return createdDocument;
+      return this.adaptProperties(createdDocument[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -69,7 +81,7 @@ export class DocumentRepository implements DocumentRepositoryInterface {
         documentSearchQuery.getSqlQuery(),
       );
 
-      return foundDocument;
+      return this.adaptProperties(foundDocument[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -101,7 +113,7 @@ export class DocumentRepository implements DocumentRepositoryInterface {
         documentSearchQuery.getSqlQuery(),
       );
 
-      return foundDocuments;
+      return foundDocuments.map((item: any) => this.adaptProperties(item));
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -120,12 +132,19 @@ export class DocumentRepository implements DocumentRepositoryInterface {
       documentDeleteQuery.setWhere([
         { field: 'id', operator: '=', value: documentId },
       ]);
+      documentDeleteQuery.setReturn([
+        'id',
+        'name',
+        'document',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const deletedDocument = await this.database.executeSqlQuery(
         documentDeleteQuery.getSqlQuery(),
       );
 
-      return deletedDocument;
+      return this.adaptProperties(deletedDocument[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -154,12 +173,19 @@ export class DocumentRepository implements DocumentRepositoryInterface {
         { field: 'createdAt', value: documentData.createdAt },
         { field: 'updatedAt', value: documentData.updatedAt },
       ]);
+      documentUpdateQuery.setReturn([
+        'id',
+        'name',
+        'document',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const updatedDocument = await this.database.executeSqlQuery(
         documentUpdateQuery.getSqlQuery(),
       );
 
-      return updatedDocument;
+      return this.adaptProperties(updatedDocument[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);

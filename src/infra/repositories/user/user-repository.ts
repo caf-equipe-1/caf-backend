@@ -4,11 +4,16 @@ import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connect
 import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
 import { UserRepositoryInterface } from 'src/infra/abstract/repositories/user/user-repository-interface';
 import { SqlQueryHelper } from 'src/infra/helpers/sqlQuery/sqlQuery-helper';
+import { Repository } from '../repository/repository';
 
-export class UserRepository implements UserRepositoryInterface {
+export class UserRepository
+  extends Repository
+  implements UserRepositoryInterface
+{
   private readonly database: DatabaseConnectionInterface;
 
   public constructor(database: DatabaseConnectionInterface) {
+    super();
     this.database = database;
   }
 
@@ -214,19 +219,5 @@ export class UserRepository implements UserRepositoryInterface {
     }
 
     this.database.disconnect(false);
-  }
-
-  private adaptProperties(item: any): any {
-    if (item) {
-      const adaptedItem = item;
-
-      adaptedItem.createdAt = item.createdat;
-      adaptedItem.updatedAt = item.updatedat;
-
-      delete adaptedItem.createdat;
-      delete adaptedItem.updatedat;
-
-      return adaptedItem;
-    }
   }
 }

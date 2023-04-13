@@ -4,11 +4,16 @@ import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connect
 import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
 import { PasswordRepositoryInterface } from 'src/infra/abstract/repositories/password/password-repository-interface';
 import { SqlQueryHelper } from 'src/infra/helpers/sqlQuery/sqlQuery-helper';
+import { Repository } from '../repository/repository';
 
-export class PasswordRepository implements PasswordRepositoryInterface {
+export class PasswordRepository
+  extends Repository
+  implements PasswordRepositoryInterface
+{
   private readonly database: DatabaseConnectionInterface;
 
   public constructor(database: DatabaseConnectionInterface) {
+    super();
     this.database = database;
   }
 
@@ -29,6 +34,14 @@ export class PasswordRepository implements PasswordRepositoryInterface {
         { field: 'createdAt', value: passwordData.createdAt },
         { field: 'updatedAt', value: passwordData.updatedAt },
       ]);
+      passwordCreationQuery.setReturn([
+        'id',
+        'name',
+        'password',
+        'createdAt',
+        'updatedAt',
+      ]);
+
       const createdPassword = await this.database.executeSqlQuery(
         passwordCreationQuery.getSqlQuery(),
       );
@@ -38,14 +51,14 @@ export class PasswordRepository implements PasswordRepositoryInterface {
       userPasswordRelationQuery.setAction(sqlAction.INSERT);
       userPasswordRelationQuery.setValues([
         { field: 'userId', value: userId },
-        { field: 'passwordId', value: createdPassword.id },
+        { field: 'passwordId', value: createdPassword[0].id },
       ]);
 
       await this.database.executeSqlQuery(
         userPasswordRelationQuery.getSqlQuery(),
       );
 
-      return createdPassword;
+      return this.adaptProperties(createdPassword[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -69,7 +82,7 @@ export class PasswordRepository implements PasswordRepositoryInterface {
         passwordSearchQuery.getSqlQuery(),
       );
 
-      return foundPassword;
+      return this.adaptProperties(foundPassword[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -101,7 +114,7 @@ export class PasswordRepository implements PasswordRepositoryInterface {
         passwordSearchQuery.getSqlQuery(),
       );
 
-      return foundPasswords;
+      return foundPasswords.map((item: any) => this.adaptProperties(item));
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -120,12 +133,19 @@ export class PasswordRepository implements PasswordRepositoryInterface {
       passwordDeleteQuery.setWhere([
         { field: 'id', operator: '=', value: passwordId },
       ]);
+      passwordDeleteQuery.setReturn([
+        'id',
+        'name',
+        'password',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const deletedPassword = await this.database.executeSqlQuery(
         passwordDeleteQuery.getSqlQuery(),
       );
 
-      return deletedPassword;
+      return this.adaptProperties(deletedPassword[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -154,12 +174,19 @@ export class PasswordRepository implements PasswordRepositoryInterface {
         { field: 'createdAt', value: passwordData.createdAt },
         { field: 'updatedAt', value: passwordData.updatedAt },
       ]);
+      passwordUpdateQuery.setReturn([
+        'id',
+        'name',
+        'password',
+        'createdAt',
+        'updatedAt',
+      ]);
 
       const updatedPassword = await this.database.executeSqlQuery(
         passwordUpdateQuery.getSqlQuery(),
       );
 
-      return updatedPassword;
+      return this.adaptProperties(updatedPassword[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);

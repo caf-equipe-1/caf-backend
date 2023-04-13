@@ -4,11 +4,16 @@ import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connect
 import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
 import { AppRepositoryInterface } from 'src/infra/abstract/repositories/app/app-repository-interface';
 import { SqlQueryHelper } from 'src/infra/helpers/sqlQuery/sqlQuery-helper';
+import { Repository } from '../repository/repository';
 
-export class AppRepository implements AppRepositoryInterface {
+export class AppRepository
+  extends Repository
+  implements AppRepositoryInterface
+{
   private readonly database: DatabaseConnectionInterface;
 
   public constructor(database: DatabaseConnectionInterface) {
+    super();
     this.database = database;
   }
 
@@ -25,6 +30,8 @@ export class AppRepository implements AppRepositoryInterface {
         { field: 'createdAt', value: appData.createdAt },
         { field: 'updatedAt', value: appData.updatedAt },
       ]);
+      appCreationQuery.setReturn(['id', 'name', 'createdAt', 'updatedAt']);
+
       const createdApp = await this.database.executeSqlQuery(
         appCreationQuery.getSqlQuery(),
       );
@@ -34,12 +41,12 @@ export class AppRepository implements AppRepositoryInterface {
       userAppRelationQuery.setAction(sqlAction.INSERT);
       userAppRelationQuery.setValues([
         { field: 'userId', value: userId },
-        { field: 'appId', value: createdApp.id },
+        { field: 'appId', value: createdApp[0].id },
       ]);
 
       await this.database.executeSqlQuery(userAppRelationQuery.getSqlQuery());
 
-      return createdApp;
+      return this.adaptProperties(createdApp[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -61,7 +68,7 @@ export class AppRepository implements AppRepositoryInterface {
         appSearchQuery.getSqlQuery(),
       );
 
-      return foundApp;
+      return this.adaptProperties(foundApp[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -88,7 +95,7 @@ export class AppRepository implements AppRepositoryInterface {
         appSearchQuery.getSqlQuery(),
       );
 
-      return foundApps;
+      return foundApps.map((item: any) => this.adaptProperties(item));
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -105,12 +112,13 @@ export class AppRepository implements AppRepositoryInterface {
       appDeleteQuery.setTable('app');
       appDeleteQuery.setAction(sqlAction.DELETE);
       appDeleteQuery.setWhere([{ field: 'id', operator: '=', value: appId }]);
+      appDeleteQuery.setReturn(['id', 'name', 'createdAt', 'updatedAt']);
 
       const deletedApp = await this.database.executeSqlQuery(
         appDeleteQuery.getSqlQuery(),
       );
 
-      return deletedApp;
+      return this.adaptProperties(deletedApp[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -133,12 +141,13 @@ export class AppRepository implements AppRepositoryInterface {
         { field: 'createdAt', value: appData.createdAt },
         { field: 'updatedAt', value: appData.updatedAt },
       ]);
+      appUpdateQuery.setReturn(['id', 'name', 'createdAt', 'updatedAt']);
 
       const updatedApp = await this.database.executeSqlQuery(
         appUpdateQuery.getSqlQuery(),
       );
 
-      return updatedApp;
+      return this.adaptProperties(updatedApp[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
