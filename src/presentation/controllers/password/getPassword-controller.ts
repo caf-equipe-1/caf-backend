@@ -28,13 +28,15 @@ export class GetPasswordController implements GetPasswordControllerInterface {
 
       switch (true) {
         case getAll:
-          const foundPasswords = this.getAllPasswordsUseCase.execute(
+          const foundPasswords = await this.getAllPasswordsUseCase.execute(
             request.userId,
           );
           return Response.ok(foundPasswords);
 
         case getOne:
-          const foundPassword = this.getOnePasswordUsecase.execute(request.id);
+          const foundPassword = await this.getOnePasswordUsecase.execute(
+            request.id,
+          );
           return Response.ok(foundPassword);
 
         default:

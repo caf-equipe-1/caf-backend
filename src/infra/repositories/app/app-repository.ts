@@ -95,7 +95,9 @@ export class AppRepository
         appSearchQuery.getSqlQuery(),
       );
 
-      return foundApps.map((item: any) => this.adaptProperties(item));
+      return foundApps.map((item: any) =>
+        this.adaptProperties({ ...item, id: item.appid }),
+      );
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);

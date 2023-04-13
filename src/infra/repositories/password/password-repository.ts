@@ -114,7 +114,9 @@ export class PasswordRepository
         passwordSearchQuery.getSqlQuery(),
       );
 
-      return foundPasswords.map((item: any) => this.adaptProperties(item));
+      return foundPasswords.map((item: any) =>
+        this.adaptProperties({ ...item, id: item.passwordid }),
+      );
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);

@@ -26,11 +26,13 @@ export class GetCardController implements GetCardControllerInterface {
 
       switch (true) {
         case getAll:
-          const foundCards = this.getAllCardsUseCase.execute(request.userId);
+          const foundCards = await this.getAllCardsUseCase.execute(
+            request.userId,
+          );
           return Response.ok(foundCards);
 
         case getOne:
-          const foundCard = this.getOneCardUsecase.execute(request.id);
+          const foundCard = await this.getOneCardUsecase.execute(request.id);
           return Response.ok(foundCard);
 
         default:

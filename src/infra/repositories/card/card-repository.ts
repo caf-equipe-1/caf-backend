@@ -106,7 +106,9 @@ export class CardRepository
         cardSearchQuery.getSqlQuery(),
       );
 
-      return foundCards.map((item: any) => this.adaptProperties(item));
+      return foundCards.map((item: any) =>
+        this.adaptProperties({ ...item, id: item.cardid }),
+      );
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);

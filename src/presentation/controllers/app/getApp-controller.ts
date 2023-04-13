@@ -26,11 +26,13 @@ export class GetAppController implements GetAppControllerInterface {
 
       switch (true) {
         case getAll:
-          const foundApps = this.getAllAppsUseCase.execute(request.userId);
+          const foundApps = await this.getAllAppsUseCase.execute(
+            request.userId,
+          );
           return Response.ok(foundApps);
 
         case getOne:
-          const foundApp = this.getOneAppUsecase.execute(request.id);
+          const foundApp = await this.getOneAppUsecase.execute(request.id);
           return Response.ok(foundApp);
 
         default:

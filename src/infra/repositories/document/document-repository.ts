@@ -34,16 +34,17 @@ export class DocumentRepository
         { field: 'createdAt', value: documentData.createdAt },
         { field: 'updatedAt', value: documentData.updatedAt },
       ]);
-      const createdDocument = await this.database.executeSqlQuery(
-        documentCreationQuery.getSqlQuery(),
-      );
-      createdDocument.setReturn([
+      documentCreationQuery.setReturn([
         'id',
         'name',
         'document',
         'createdAt',
         'updatedAt',
       ]);
+
+      const createdDocument = await this.database.executeSqlQuery(
+        documentCreationQuery.getSqlQuery(),
+      );
 
       const userDocumentRelationQuery = new SqlQueryHelper();
       userDocumentRelationQuery.setTable('user_document');
@@ -113,7 +114,9 @@ export class DocumentRepository
         documentSearchQuery.getSqlQuery(),
       );
 
-      return foundDocuments.map((item: any) => this.adaptProperties(item));
+      return foundDocuments.map((item: any) =>
+        this.adaptProperties({ ...item, id: item.documentid }),
+      );
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
