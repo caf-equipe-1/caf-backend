@@ -192,7 +192,10 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
       ? this.valuesRaw
       : valuesDefined
       ? this.values
-          .map((element) => ` ${element.field} = ${element.value}`)
+          .map(
+            (element) =>
+              ` ${element.field} = ${this.setValueType(element.value)}`,
+          )
           .join(', ')
       : '';
 
@@ -202,7 +205,9 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
       ? this.where
           .map(
             (element) =>
-              ` AND ${element.field} ${element.operator} ${element.value}`,
+              ` AND ${element.field} ${element.operator} ${this.setValueType(
+                element.value,
+              )}`,
           )
           .join(', ')
       : '';
