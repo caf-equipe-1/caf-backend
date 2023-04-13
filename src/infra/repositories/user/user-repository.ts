@@ -5,6 +5,19 @@ import { sqlAction } from 'src/infra/abstract/enums/sqlAction-enum';
 import { UserRepositoryInterface } from 'src/infra/abstract/repositories/user/user-repository-interface';
 import { SqlQueryHelper } from 'src/infra/helpers/sqlQuery/sqlQuery-helper';
 import { Repository } from '../repository/repository';
+import { App } from 'src/domain/entities/app/app-entity';
+import { Card } from 'src/domain/entities/card/card-entity';
+import { Password } from 'src/domain/entities/password/password-entity';
+
+type RelationsType = {
+  passwords: Password[];
+  documents: {
+    id: string;
+    name: string;
+  }[];
+  cards: Card[];
+  apps: App[];
+};
 
 export class UserRepository
   extends Repository
@@ -48,7 +61,13 @@ export class UserRepository
         userCreationQuery.getSqlQuery(),
       );
 
-      return this.adaptProperties(createdUser[0]);
+      const userRelations = this.getRelations(createdUser[0].id);
+      const user = {
+        ...this.adaptProperties(createdUser[0]),
+        ...userRelations,
+      };
+
+      return user;
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -70,7 +89,15 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
-      return this.adaptProperties(foundUser[0]);
+      if (foundUser.length > 0) {
+        const userRelations = await this.getRelations(foundUser[0].id);
+        const user = {
+          ...this.adaptProperties(foundUser[0]),
+          ...userRelations,
+        };
+
+        return user;
+      }
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -219,5 +246,93 @@ export class UserRepository
     }
 
     this.database.disconnect(false);
+  }
+
+  private async getRelations(userId: string): Promise<RelationsType> {
+    const relations = {
+      apps: [],
+      cards: [],
+      documents: [],
+      passwords: [],
+    };
+
+    const appSearchQuery = new SqlQueryHelper();
+    appSearchQuery.setTable('app');
+    appSearchQuery.setAction(sqlAction.SELECT);
+    appSearchQuery.setInnerJoin([
+      { table: 'user_app', field1: 'appId', operator: '=', field2: 'id' },
+    ]);
+    appSearchQuery.setWhere([
+      { field: 'userId', operator: '=', value: userId },
+    ]);
+    const foundApps = await this.database.executeSqlQuery(
+      appSearchQuery.getSqlQuery(),
+    );
+    relations.apps = foundApps.map((item: any) =>
+      this.adaptProperties({ ...item, id: item.appid }),
+    );
+
+    const cardSearchQuery = new SqlQueryHelper();
+    cardSearchQuery.setTable('card');
+    cardSearchQuery.setAction(sqlAction.SELECT);
+    cardSearchQuery.setInnerJoin([
+      { table: 'user_card', field1: 'cardId', operator: '=', field2: 'id' },
+    ]);
+    cardSearchQuery.setWhere([
+      { field: 'userId', operator: '=', value: userId },
+    ]);
+    const foundCards = await this.database.executeSqlQuery(
+      cardSearchQuery.getSqlQuery(),
+    );
+    relations.cards = foundCards.map((item: any) =>
+      this.adaptProperties({ ...item, id: item.cardid }),
+    );
+
+    const documentSearchQuery = new SqlQueryHelper();
+    documentSearchQuery.setTable('document');
+    documentSearchQuery.setAction(sqlAction.SELECT);
+    documentSearchQuery.setInnerJoin([
+      {
+        table: 'user_document',
+        field1: 'documentId',
+        operator: '=',
+        field2: 'id',
+      },
+    ]);
+    documentSearchQuery.setWhere([
+      { field: 'userId', operator: '=', value: userId },
+    ]);
+
+    const foundDocuments = await this.database.executeSqlQuery(
+      documentSearchQuery.getSqlQuery(),
+    );
+    relations.documents = foundDocuments.map((item: any) =>
+      this.adaptProperties({ ...item, id: item.documentid }),
+    );
+
+    const passwordSearchQuery = new SqlQueryHelper();
+    passwordSearchQuery.setTable('password');
+    passwordSearchQuery.setAction(sqlAction.SELECT);
+    passwordSearchQuery.setInnerJoin([
+      {
+        table: 'user_password',
+        field1: 'passwordId',
+        operator: '=',
+        field2: 'id',
+      },
+    ]);
+    passwordSearchQuery.setWhere([
+      { field: 'userId', operator: '=', value: userId },
+    ]);
+
+    const foundPasswords = await this.database.executeSqlQuery(
+      passwordSearchQuery.getSqlQuery(),
+    );
+
+    relations.passwords = foundPasswords.map((item: any) =>
+      this.adaptProperties({ ...item, id: item.passwordid }),
+    );
+
+    return relations;
   }
 }
