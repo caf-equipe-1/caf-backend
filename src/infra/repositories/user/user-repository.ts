@@ -43,7 +43,7 @@ export class UserRepository implements UserRepositoryInterface {
         userCreationQuery.getSqlQuery(),
       );
 
-      return createdUser[0];
+      return this.adaptProperties(createdUser[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -65,7 +65,7 @@ export class UserRepository implements UserRepositoryInterface {
         userSearchQuery.getSqlQuery(),
       );
 
-      return foundUser[0];
+      return this.adaptProperties(foundUser[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -89,7 +89,7 @@ export class UserRepository implements UserRepositoryInterface {
         userSearchQuery.getSqlQuery(),
       );
 
-      return foundUser[0];
+      return this.adaptProperties(foundUser[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -112,7 +112,7 @@ export class UserRepository implements UserRepositoryInterface {
         userSearchQuery.getSqlQuery(),
       );
 
-      return foundUser[0];
+      return this.adaptProperties(foundUser[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -133,7 +133,7 @@ export class UserRepository implements UserRepositoryInterface {
         userSearchQuery.getSqlQuery(),
       );
 
-      return foundUsers;
+      return foundUsers.map((item: any) => this.adaptProperties(item));
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -165,7 +165,7 @@ export class UserRepository implements UserRepositoryInterface {
         userDeleteQuery.getSqlQuery(),
       );
 
-      return deletedUser[0];
+      return this.adaptProperties(deletedUser[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
@@ -207,12 +207,26 @@ export class UserRepository implements UserRepositoryInterface {
         userUpdateQuery.getSqlQuery(),
       );
 
-      return updatedUser;
+      return this.adaptProperties(updatedUser[0]);
     } catch (error) {
       console.log(error);
       this.database.disconnect(true);
     }
 
     this.database.disconnect(false);
+  }
+
+  private adaptProperties(item: any): any {
+    if (item) {
+      const adaptedItem = item;
+
+      adaptedItem.createdAt = item.createdat;
+      adaptedItem.updatedAt = item.updatedat;
+
+      delete adaptedItem.createdat;
+      delete adaptedItem.updatedat;
+
+      return adaptedItem;
+    }
   }
 }

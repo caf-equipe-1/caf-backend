@@ -26,7 +26,9 @@ export class GetUserController implements GetUserControllerInterface {
 
       switch (true) {
         case getOne:
-          const foundUser = await this.getOneUserUsecase.execute(request.id);
+          const foundUser = await this.getOneUserUsecase.execute(
+            request.id || '',
+          );
           return Response.ok(foundUser);
 
         default:

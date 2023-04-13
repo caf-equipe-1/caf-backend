@@ -237,7 +237,7 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
       case 'DELETE':
         return `
                 DELETE FROM "${table}"
-                ${where}
+                WHERE 1 = 1 ${where}
                 ${returning};
             `;
 

@@ -98,10 +98,14 @@ export class UserEntity extends Entity implements UserEntityInterface {
       cpf: this.userDto.cpf ?? mainData.cpf,
       email: this.userDto.email ?? mainData.email,
       photo: this.userDto.photo ?? mainData.photo,
-      cards: mainData.cards.map((item) => item.id),
-      documents: mainData.documents.map((item) => item.id),
-      apps: mainData.apps.map((item) => item.id),
-      passwords: mainData.passwords.map((item) => item.id),
+      cards: mainData.cards ? mainData.cards.map((item) => item.id) : [],
+      documents: mainData.documents
+        ? mainData.documents.map((item) => item.id)
+        : [],
+      apps: mainData.apps ? mainData.apps.map((item) => item.id) : [],
+      passwords: mainData.passwords
+        ? mainData.passwords.map((item) => item.id)
+        : [],
       createdAt: mainData.createdAt,
       updatedAt: this.getDate(),
     };
