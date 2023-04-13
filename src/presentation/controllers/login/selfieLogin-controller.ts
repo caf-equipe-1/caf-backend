@@ -7,8 +7,12 @@ import { SelfieLoginControllerInterface } from 'src/presentation/abstract/contro
 import { Response } from 'src/presentation/helpers/http/response';
 import { MissingParamError } from 'src/utils/errors/missingParam-error';
 
-export class EmailLoginController implements SelfieLoginControllerInterface {
+export class SelfieLoginController implements SelfieLoginControllerInterface {
   private readonly makeSelfieLoginUsecase: MakeSelfieLoginUseCaseInterface;
+
+  public constructor(makeSelfieLoginUsecase: MakeSelfieLoginUseCaseInterface) {
+    this.makeSelfieLoginUsecase = makeSelfieLoginUsecase;
+  }
 
   public async execute(
     request: HttpRequest<SelfieLoginDto>,

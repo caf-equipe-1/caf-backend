@@ -10,6 +10,10 @@ import { MissingParamError } from 'src/utils/errors/missingParam-error';
 export class EmailLoginController implements EmailLoginControllerInterface {
   private readonly makeEmailLoginUsecase: MakeEmailLoginUseCaseInterface;
 
+  public constructor(makeEmailLoginUsecase: MakeEmailLoginUseCaseInterface) {
+    this.makeEmailLoginUsecase = makeEmailLoginUsecase;
+  }
+
   public async execute(
     request: HttpRequest<EmailLoginDto>,
   ): Promise<HttpResponse<LoggedUserDto>> {
