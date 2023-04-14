@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { makeSelfieLoginControllerFactory } from 'src/main/factories/controllers/login/selfieloginController-factory';
+import { makeSelfieLoginControllerFactory } from 'src/main/factories/controllers/login/selfieLoginController-factory';
 import { SelfieLoginController } from 'src/presentation/controllers/login/selfieLogin-controller';
 import { MakeSelfieLoginController } from '../../controllers/login/makeSelfieLogin.controller';
 

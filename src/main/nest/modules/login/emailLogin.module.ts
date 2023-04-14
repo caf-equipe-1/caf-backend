@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { makeEmailLoginControllerFactory } from 'src/main/factories/controllers/login/emailloginController-factory';
+import { makeEmailLoginControllerFactory } from 'src/main/factories/controllers/login/emailLoginController-factory';
 import { EmailLoginController } from 'src/presentation/controllers/login/emailLogin-controller';
 import { MakeEmailLoginController } from '../../controllers/login/makeEmailLogin.controller';
 
