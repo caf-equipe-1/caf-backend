@@ -7,13 +7,21 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { CreateOrUpdateAppType } from 'src/domain/types/entities/app/createOrUpdateApp-type';
 import { CreateAppController } from 'src/presentation/controllers/app/createApp-controller';
 import { DeleteAppController } from 'src/presentation/controllers/app/deleteApp-controller';
 import { GetAppController } from 'src/presentation/controllers/app/getApp-controller';
 import { UpdateAppController } from 'src/presentation/controllers/app/updateApp-controller';
+import { CreateAppDto } from '../../dtos/request/app/createApp.dto';
+import { UpdateAppDto } from '../../dtos/request/app/updateAp.dto';
+import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 
 @ApiTags('Apps')
 @Controller('/apps')
@@ -25,8 +33,27 @@ export class AppController {
     private readonly getAppController: GetAppController,
   ) {}
 
+  @ApiResponse({
+    status: 201,
+    description: 'Created.',
+    schema: makeHttpResponseDto('app'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route for the store of a new app name.',
+  })
+  @ApiBearerAuth()
   @Post()
-  public async create(@Body() body: CreateOrUpdateAppType) {
+  public async create(@Body() body: CreateAppDto) {
     const requestBody: any = body;
     const userId = requestBody.userId;
     const httpRequest: HttpRequest<CreateOrUpdateAppType> = { userId, body };
@@ -34,11 +61,27 @@ export class AppController {
     return await this.createAppController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('app'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route for the update of an app name register.',
+  })
+  @ApiBearerAuth()
   @Patch(':id')
-  public async update(
-    @Param('id') id: string,
-    @Body() body: CreateOrUpdateAppType,
-  ) {
+  public async update(@Param('id') id: string, @Body() body: UpdateAppDto) {
     const requestBody: any = body;
     const userId = requestBody.userId;
     const httpRequest: HttpRequest<CreateOrUpdateAppType> = {
@@ -50,6 +93,25 @@ export class AppController {
     return await this.updateAppController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('app'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route for the deletion of an app name register.',
+  })
+  @ApiBearerAuth()
   @Delete(':id')
   public async delete(@Param('id') id: string, @Body() body: any) {
     const requestBody: any = body;
@@ -59,6 +121,25 @@ export class AppController {
     return await this.deleteAppController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('app'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route to view an unique app name register.',
+  })
+  @ApiBearerAuth()
   @Get(':id')
   public async getOne(@Param('id') id: string) {
     const httpRequest: HttpRequest<object> = { id };
@@ -66,6 +147,26 @@ export class AppController {
     return await this.getAppController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('app', true),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary:
+      'Route to view all the app name registers attributed to the logged user.',
+  })
+  @ApiBearerAuth()
   @Get()
   public async getAll(@Body() body: any) {
     const requestBody: any = body;

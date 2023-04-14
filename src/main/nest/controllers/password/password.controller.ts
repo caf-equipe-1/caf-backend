@@ -7,13 +7,21 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { CreateOrUpdatePasswordType } from 'src/domain/types/entities/password/createOrUpdatePassword-type';
 import { CreatePasswordController } from 'src/presentation/controllers/password/createPassword-controller';
 import { DeletePasswordController } from 'src/presentation/controllers/password/deletePassword-controller';
 import { GetPasswordController } from 'src/presentation/controllers/password/getPassword-controller';
 import { UpdatePasswordController } from 'src/presentation/controllers/password/updatePassword-controller';
+import { CreatePasswordDto } from '../../dtos/request/password/createPassword.dto';
+import { UpdatePasswordDto } from '../../dtos/request/password/updatePassword.dto';
+import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 
 @ApiTags('Passwords')
 @Controller('/passwords')
@@ -25,8 +33,27 @@ export class PasswordController {
     private readonly getPasswordController: GetPasswordController,
   ) {}
 
+  @ApiResponse({
+    status: 201,
+    description: 'Created.',
+    schema: makeHttpResponseDto('password'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route for the store of a new password info.',
+  })
+  @ApiBearerAuth()
   @Post()
-  public async create(@Body() body: CreateOrUpdatePasswordType) {
+  public async create(@Body() body: CreatePasswordDto) {
     const requestBody: any = body;
     const userId = requestBody.userId;
     const httpRequest: HttpRequest<CreateOrUpdatePasswordType> = {
@@ -37,10 +64,29 @@ export class PasswordController {
     return await this.createPasswordController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('password'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route for the update of a password info register.',
+  })
+  @ApiBearerAuth()
   @Patch(':id')
   public async update(
     @Param('id') id: string,
-    @Body() body: CreateOrUpdatePasswordType,
+    @Body() body: UpdatePasswordDto,
   ) {
     const requestBody: any = body;
     const userId = requestBody.userId;
@@ -53,6 +99,25 @@ export class PasswordController {
     return await this.updatePasswordController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('password'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route for the deletion of a password info register.',
+  })
+  @ApiBearerAuth()
   @Delete(':id')
   public async delete(@Param('id') id: string, @Body() body: any) {
     const requestBody: any = body;
@@ -62,6 +127,25 @@ export class PasswordController {
     return await this.deletePasswordController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('password'),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary: 'Route to view an unique password info register.',
+  })
+  @ApiBearerAuth()
   @Get(':id')
   public async getOne(@Param('id') id: string) {
     const httpRequest: HttpRequest<object> = { id };
@@ -69,6 +153,26 @@ export class PasswordController {
     return await this.getPasswordController.execute(httpRequest);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Ok.',
+    schema: makeHttpResponseDto('password', true),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
+  })
+  @ApiOperation({
+    summary:
+      'Route to view all the password info registers attributed to the logged user.',
+  })
+  @ApiBearerAuth()
   @Get()
   public async getAll(@Body() body: any) {
     const requestBody: any = body;
