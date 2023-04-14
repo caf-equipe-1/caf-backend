@@ -9,10 +9,9 @@ async function bootstrap() {
   app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('FaceApp')
-    .setDescription(
-      'APi with nestJs as a framework and typescript as main development language',
-    )
-    .setVersion('1.0')
+    .setDescription('APi made with Typescript and NestJS.')
+    .setVersion('1.0.0')
+    .addTag('Main')
     .addTag('EmailLogin')
     .addTag('SelfieLogin')
     .addTag('Documents')
@@ -20,10 +19,10 @@ async function bootstrap() {
     .addTag('Users')
     .addTag('Passwords')
     .addTag('Cards')
-
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(EnvVariables.getPort());
 }
