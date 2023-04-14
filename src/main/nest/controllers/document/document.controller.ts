@@ -19,8 +19,9 @@ import { CreateDocumentController } from 'src/presentation/controllers/document/
 import { DeleteDocumentController } from 'src/presentation/controllers/document/deleteDocument-controller';
 import { GetDocumentController } from 'src/presentation/controllers/document/getDocument-controller';
 import { UpdateDocumentController } from 'src/presentation/controllers/document/updateDocument-controller';
-import { CreateDocumentDto } from '../../dtos/document/createDocument.dto';
-import { UpdateDocumentDto } from '../../dtos/document/updateDocument.dto';
+import { CreateDocumentDto } from '../../dtos/request/document/createDocument.dto';
+import { UpdateDocumentDto } from '../../dtos/request/document/updateDocument.dto';
+import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 
 @ApiTags('Documents')
 @Controller('/documents')
@@ -35,14 +36,17 @@ export class DocumentController {
   @ApiResponse({
     status: 201,
     description: 'Created.',
+    schema: makeHttpResponseDto('document'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the store of a new document.',
@@ -63,14 +67,17 @@ export class DocumentController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('document'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the update of a document register.',
@@ -95,14 +102,17 @@ export class DocumentController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('document'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the deletion of a document register.',
@@ -120,14 +130,17 @@ export class DocumentController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('document'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route to view an unique document register.',
@@ -143,14 +156,17 @@ export class DocumentController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('document', true),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary:

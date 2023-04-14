@@ -19,8 +19,9 @@ import { CreateAppController } from 'src/presentation/controllers/app/createApp-
 import { DeleteAppController } from 'src/presentation/controllers/app/deleteApp-controller';
 import { GetAppController } from 'src/presentation/controllers/app/getApp-controller';
 import { UpdateAppController } from 'src/presentation/controllers/app/updateApp-controller';
-import { CreateAppDto } from '../../dtos/app/createApp.dto';
-import { UpdateAppDto } from '../../dtos/app/updateAp.dto';
+import { CreateAppDto } from '../../dtos/request/app/createApp.dto';
+import { UpdateAppDto } from '../../dtos/request/app/updateAp.dto';
+import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 
 @ApiTags('Apps')
 @Controller('/apps')
@@ -35,14 +36,17 @@ export class AppController {
   @ApiResponse({
     status: 201,
     description: 'Created.',
+    schema: makeHttpResponseDto('app'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the store of a new app name.',
@@ -60,14 +64,17 @@ export class AppController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('app'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the update of an app name register.',
@@ -89,14 +96,17 @@ export class AppController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('app'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the deletion of an app name register.',
@@ -114,14 +124,17 @@ export class AppController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('app'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route to view an unique app name register.',
@@ -137,14 +150,17 @@ export class AppController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('app', true),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary:

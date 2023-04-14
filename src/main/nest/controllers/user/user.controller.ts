@@ -20,8 +20,9 @@ import { CreateUserController } from 'src/presentation/controllers/user/createUs
 import { DeleteUserController } from 'src/presentation/controllers/user/deleteUser-controller';
 import { GetUserController } from 'src/presentation/controllers/user/getUser-controller';
 import { UpdateUserController } from 'src/presentation/controllers/user/updateUser-controller';
-import { CreateUserDto } from '../../dtos/user/createUser.dto';
-import { UpdateUserDto } from '../../dtos/user/updateUser.dto';
+import { CreateUserDto } from '../../dtos/request/user/createUser.dto';
+import { UpdateUserDto } from '../../dtos/request/user/updateUser.dto';
+import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 
 @ApiTags('Users')
 @Controller('/users')
@@ -36,14 +37,17 @@ export class UserController {
   @ApiResponse({
     status: 201,
     description: 'Created.',
+    schema: makeHttpResponseDto('user'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the creation of a new user.',
@@ -58,14 +62,17 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('user'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the update of an user register.',
@@ -84,14 +91,17 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('user'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the deletion of an user register.',
@@ -107,14 +117,17 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('user'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route to view an unique user info.',

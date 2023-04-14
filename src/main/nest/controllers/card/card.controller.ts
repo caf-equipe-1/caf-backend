@@ -19,8 +19,9 @@ import { CreateCardController } from 'src/presentation/controllers/card/createCa
 import { DeleteCardController } from 'src/presentation/controllers/card/deleteCard-controller';
 import { GetCardController } from 'src/presentation/controllers/card/getCard-controller';
 import { UpdateCardController } from 'src/presentation/controllers/card/updateCard-controller';
-import { CreateCardDto } from '../../dtos/card/createCard.dto';
-import { UpdateCardDto } from '../../dtos/card/updateCard.dto';
+import { CreateCardDto } from '../../dtos/request/card/createCard.dto';
+import { UpdateCardDto } from '../../dtos/request/card/updateCard.dto';
+import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 
 @ApiTags('Cards')
 @Controller('/cards')
@@ -35,14 +36,17 @@ export class CardController {
   @ApiResponse({
     status: 201,
     description: 'Created.',
+    schema: makeHttpResponseDto('card'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the store of a new credit card info.',
@@ -60,14 +64,17 @@ export class CardController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('card'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the update of a credit card register.',
@@ -89,14 +96,17 @@ export class CardController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('card'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the deletion of a credit card register.',
@@ -114,14 +124,17 @@ export class CardController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('card'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route to view an unique credit card register.',
@@ -137,14 +150,17 @@ export class CardController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('card', true),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary:

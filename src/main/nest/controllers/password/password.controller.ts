@@ -19,8 +19,9 @@ import { CreatePasswordController } from 'src/presentation/controllers/password/
 import { DeletePasswordController } from 'src/presentation/controllers/password/deletePassword-controller';
 import { GetPasswordController } from 'src/presentation/controllers/password/getPassword-controller';
 import { UpdatePasswordController } from 'src/presentation/controllers/password/updatePassword-controller';
-import { CreatePasswordDto } from '../../dtos/password/createPassword.dto';
-import { UpdatePasswordDto } from '../../dtos/password/updatePassword.dto';
+import { CreatePasswordDto } from '../../dtos/request/password/createPassword.dto';
+import { UpdatePasswordDto } from '../../dtos/request/password/updatePassword.dto';
+import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 
 @ApiTags('Passwords')
 @Controller('/passwords')
@@ -35,14 +36,17 @@ export class PasswordController {
   @ApiResponse({
     status: 201,
     description: 'Created.',
+    schema: makeHttpResponseDto('password'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the store of a new password info.',
@@ -63,14 +67,17 @@ export class PasswordController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('password'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the update of a password info register.',
@@ -95,14 +102,17 @@ export class PasswordController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('password'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route for the deletion of a password info register.',
@@ -120,14 +130,17 @@ export class PasswordController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('password'),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary: 'Route to view an unique password info register.',
@@ -143,14 +156,17 @@ export class PasswordController {
   @ApiResponse({
     status: 200,
     description: 'Ok.',
+    schema: makeHttpResponseDto('password', true),
   })
   @ApiResponse({
     status: 400,
     description: 'Bad request',
+    schema: makeHttpResponseDto(),
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized.',
+    schema: makeHttpResponseDto(),
   })
   @ApiOperation({
     summary:
