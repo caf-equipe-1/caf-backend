@@ -21,7 +21,7 @@ export class DocumentRepository
     userId: string,
     documentData: DocumentType,
   ): Promise<Document> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const documentCreationQuery = new SqlQueryHelper();
@@ -58,17 +58,17 @@ export class DocumentRepository
         userDocumentRelationQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(createdDocument[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getOne(documentId: string): Promise<Document> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const documentSearchQuery = new SqlQueryHelper();
@@ -82,17 +82,17 @@ export class DocumentRepository
         documentSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(foundDocument[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getAll(userId: string): Promise<Document[]> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const documentSearchQuery = new SqlQueryHelper();
@@ -114,19 +114,19 @@ export class DocumentRepository
         documentSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return foundDocuments.map((item: any) =>
         this.adaptProperties({ ...item, id: item.documentid }),
       );
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async delete(documentId: string): Promise<Document> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const documentDeleteQuery = new SqlQueryHelper();
@@ -147,20 +147,20 @@ export class DocumentRepository
         documentDeleteQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(deletedDocument[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async update(
     documentId: string,
     documentData: DocumentType,
   ): Promise<Document> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const documentUpdateQuery = new SqlQueryHelper();
@@ -188,12 +188,12 @@ export class DocumentRepository
         documentUpdateQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(updatedDocument[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 }

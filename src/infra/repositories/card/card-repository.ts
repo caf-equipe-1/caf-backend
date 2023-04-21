@@ -18,7 +18,7 @@ export class CardRepository
   }
 
   public async create(userId: string, cardData: CardType): Promise<Card> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const cardCreationQuery = new SqlQueryHelper();
@@ -57,17 +57,17 @@ export class CardRepository
 
       await this.database.executeSqlQuery(userCardRelationQuery.getSqlQuery());
 
+      await this.database.commit();
+
       return this.adaptProperties(createdCard[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getOne(cardId: string): Promise<Card> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const cardSearchQuery = new SqlQueryHelper();
@@ -79,17 +79,17 @@ export class CardRepository
         cardSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(foundCard[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getAll(userId: string): Promise<Card[]> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const cardSearchQuery = new SqlQueryHelper();
@@ -106,19 +106,19 @@ export class CardRepository
         cardSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return foundCards.map((item: any) =>
         this.adaptProperties({ ...item, id: item.cardid }),
       );
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async delete(cardId: string): Promise<Card> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const cardDeleteQuery = new SqlQueryHelper();
@@ -139,17 +139,17 @@ export class CardRepository
         cardDeleteQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(deletedCard[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async update(cardId: string, cardData: CardType): Promise<Card> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const cardUpdateQuery = new SqlQueryHelper();
@@ -179,12 +179,12 @@ export class CardRepository
         cardUpdateQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(updatedCard[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 }

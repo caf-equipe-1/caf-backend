@@ -18,7 +18,7 @@ export class AppRepository
   }
 
   public async create(userId: string, appData: AppType): Promise<App> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const appCreationQuery = new SqlQueryHelper();
@@ -46,17 +46,17 @@ export class AppRepository
 
       await this.database.executeSqlQuery(userAppRelationQuery.getSqlQuery());
 
+      await this.database.commit();
+
       return this.adaptProperties(createdApp[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getOne(appId: string): Promise<App> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const appSearchQuery = new SqlQueryHelper();
@@ -68,17 +68,17 @@ export class AppRepository
         appSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(foundApp[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getAll(userId: string): Promise<App[]> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const appSearchQuery = new SqlQueryHelper();
@@ -95,19 +95,19 @@ export class AppRepository
         appSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return foundApps.map((item: any) =>
         this.adaptProperties({ ...item, id: item.appid }),
       );
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async delete(appId: string): Promise<App> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const appDeleteQuery = new SqlQueryHelper();
@@ -120,17 +120,17 @@ export class AppRepository
         appDeleteQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(deletedApp[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async update(appId: string, appData: AppType): Promise<App> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const appUpdateQuery = new SqlQueryHelper();
@@ -149,12 +149,12 @@ export class AppRepository
         appUpdateQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(updatedApp[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 }

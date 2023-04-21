@@ -31,7 +31,7 @@ export class UserRepository
   }
 
   public async create(userData: UserType): Promise<User> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const userCreationQuery = new SqlQueryHelper();
@@ -67,17 +67,17 @@ export class UserRepository
         ...userRelations,
       };
 
+      await this.database.commit();
+
       return user;
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getOneById(userId: string): Promise<User> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const userSearchQuery = new SqlQueryHelper();
@@ -96,18 +96,18 @@ export class UserRepository
           ...userRelations,
         };
 
+        await this.database.commit();
+
         return user;
       }
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getOneByCpf(userCnpj: string): Promise<User> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const userSearchQuery = new SqlQueryHelper();
@@ -121,17 +121,17 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(foundUser[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getOneByEmail(userEmail: string): Promise<User> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const userSearchQuery = new SqlQueryHelper();
@@ -144,17 +144,17 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(foundUser[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async getAll(): Promise<User[]> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const userSearchQuery = new SqlQueryHelper();
@@ -165,17 +165,17 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return foundUsers.map((item: any) => this.adaptProperties(item));
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async delete(userId: string): Promise<User> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const userDeleteQuery = new SqlQueryHelper();
@@ -197,17 +197,17 @@ export class UserRepository
         userDeleteQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(deletedUser[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   public async update(userId: string, userData: UserType): Promise<User> {
-    this.database.connect();
+    await this.database.begin();
 
     try {
       const userUpdateQuery = new SqlQueryHelper();
@@ -239,13 +239,13 @@ export class UserRepository
         userUpdateQuery.getSqlQuery(),
       );
 
+      await this.database.commit();
+
       return this.adaptProperties(updatedUser[0]);
     } catch (error) {
       console.log(error);
-      this.database.disconnect(true);
+      await this.database.rollback();
     }
-
-    this.database.disconnect(false);
   }
 
   private async getRelations(userId: string): Promise<RelationsType> {

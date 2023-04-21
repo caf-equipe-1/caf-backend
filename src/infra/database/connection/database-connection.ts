@@ -1,4 +1,4 @@
-import { Client, Pool } from 'pg';
+import { Pool } from 'pg';
 import { DatabaseConnectionInterface } from 'src/infra/abstract/database/connection/database-connection-interface';
 import { EnvVariables } from 'src/utils/env/envVariables-util';
 
@@ -12,23 +12,28 @@ export class DatabaseConnection implements DatabaseConnectionInterface {
   }
 
   public async connect(): Promise<void> {
-    return await this.client.connect().then(() => {
-      this.client.query('BEGIN');
-    });
+    await this.client.connect();
+    return;
   }
 
-  public async disconnect(rollback: boolean): Promise<void> {
-    switch (rollback) {
-      case true:
-        return await this.client.query('ROLLBACK').then(() => {
-          this.client.end();
-        });
+  public async begin(): Promise<void> {
+    await this.client.query('BEGIN');
+    return;
+  }
 
-      default:
-        return await this.client.query('COMMIT').then(() => {
-          this.client.end();
-        });
-    }
+  public async rollback(): Promise<void> {
+    await this.client.query('ROLLBACK');
+    return;
+  }
+
+  public async commit(): Promise<void> {
+    await this.client.query('COMMIT');
+    return;
+  }
+
+  public async disconnect(): Promise<void> {
+    this.client.end();
+    return;
   }
 
   public async executeSqlQuery(sqlQuery: string): Promise<any> {
