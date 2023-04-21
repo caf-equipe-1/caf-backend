@@ -31,8 +31,6 @@ export class UserRepository
   }
 
   public async create(userData: UserType): Promise<User> {
-    await this.database.begin();
-
     try {
       const userCreationQuery = new SqlQueryHelper();
       userCreationQuery.setTable('user');
@@ -67,18 +65,15 @@ export class UserRepository
         ...userRelations,
       };
 
-      await this.database.commit();
-
       return user;
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getOneById(userId: string): Promise<User> {
-    await this.database.begin();
-
     try {
       const userSearchQuery = new SqlQueryHelper();
       userSearchQuery.setTable('user');
@@ -96,19 +91,16 @@ export class UserRepository
           ...userRelations,
         };
 
-        await this.database.commit();
-
         return user;
       }
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getOneByCpf(userCnpj: string): Promise<User> {
-    await this.database.begin();
-
     try {
       const userSearchQuery = new SqlQueryHelper();
       userSearchQuery.setTable('user');
@@ -121,18 +113,15 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(foundUser[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getOneByEmail(userEmail: string): Promise<User> {
-    await this.database.begin();
-
     try {
       const userSearchQuery = new SqlQueryHelper();
       userSearchQuery.setTable('user');
@@ -144,18 +133,15 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(foundUser[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getAll(): Promise<User[]> {
-    await this.database.begin();
-
     try {
       const userSearchQuery = new SqlQueryHelper();
       userSearchQuery.setTable('user');
@@ -165,18 +151,15 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return foundUsers.map((item: any) => this.adaptProperties(item));
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async delete(userId: string): Promise<User> {
-    await this.database.begin();
-
     try {
       const userDeleteQuery = new SqlQueryHelper();
       userDeleteQuery.setTable('user');
@@ -197,18 +180,15 @@ export class UserRepository
         userDeleteQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(deletedUser[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async update(userId: string, userData: UserType): Promise<User> {
-    await this.database.begin();
-
     try {
       const userUpdateQuery = new SqlQueryHelper();
       userUpdateQuery.setTable('user');
@@ -239,12 +219,11 @@ export class UserRepository
         userUpdateQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(updatedUser[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 

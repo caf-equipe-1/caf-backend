@@ -18,8 +18,6 @@ export class CardRepository
   }
 
   public async create(userId: string, cardData: CardType): Promise<Card> {
-    await this.database.begin();
-
     try {
       const cardCreationQuery = new SqlQueryHelper();
       cardCreationQuery.setTable('card');
@@ -57,18 +55,15 @@ export class CardRepository
 
       await this.database.executeSqlQuery(userCardRelationQuery.getSqlQuery());
 
-      await this.database.commit();
-
       return this.adaptProperties(createdCard[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getOne(cardId: string): Promise<Card> {
-    await this.database.begin();
-
     try {
       const cardSearchQuery = new SqlQueryHelper();
       cardSearchQuery.setTable('card');
@@ -79,18 +74,15 @@ export class CardRepository
         cardSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(foundCard[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getAll(userId: string): Promise<Card[]> {
-    await this.database.begin();
-
     try {
       const cardSearchQuery = new SqlQueryHelper();
       cardSearchQuery.setTable('card');
@@ -106,20 +98,17 @@ export class CardRepository
         cardSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return foundCards.map((item: any) =>
         this.adaptProperties({ ...item, id: item.cardid }),
       );
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async delete(cardId: string): Promise<Card> {
-    await this.database.begin();
-
     try {
       const cardDeleteQuery = new SqlQueryHelper();
       cardDeleteQuery.setTable('card');
@@ -139,18 +128,15 @@ export class CardRepository
         cardDeleteQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(deletedCard[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async update(cardId: string, cardData: CardType): Promise<Card> {
-    await this.database.begin();
-
     try {
       const cardUpdateQuery = new SqlQueryHelper();
       cardUpdateQuery.setTable('card');
@@ -179,12 +165,11 @@ export class CardRepository
         cardUpdateQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(updatedCard[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 }

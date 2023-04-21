@@ -21,8 +21,6 @@ export class PasswordRepository
     userId: string,
     passwordData: PasswordType,
   ): Promise<Password> {
-    await this.database.begin();
-
     try {
       const passwordCreationQuery = new SqlQueryHelper();
       passwordCreationQuery.setTable('password');
@@ -58,18 +56,15 @@ export class PasswordRepository
         userPasswordRelationQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(createdPassword[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getOne(passwordId: string): Promise<Password> {
-    await this.database.begin();
-
     try {
       const passwordSearchQuery = new SqlQueryHelper();
       passwordSearchQuery.setTable('password');
@@ -82,18 +77,15 @@ export class PasswordRepository
         passwordSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(foundPassword[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getAll(userId: string): Promise<Password[]> {
-    await this.database.begin();
-
     try {
       const passwordSearchQuery = new SqlQueryHelper();
       passwordSearchQuery.setTable('password');
@@ -114,20 +106,17 @@ export class PasswordRepository
         passwordSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return foundPasswords.map((item: any) =>
         this.adaptProperties({ ...item, id: item.passwordid }),
       );
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async delete(passwordId: string): Promise<Password> {
-    await this.database.begin();
-
     try {
       const passwordDeleteQuery = new SqlQueryHelper();
       passwordDeleteQuery.setTable('password');
@@ -147,12 +136,11 @@ export class PasswordRepository
         passwordDeleteQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(deletedPassword[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
@@ -160,8 +148,6 @@ export class PasswordRepository
     passwordId: string,
     passwordData: PasswordType,
   ): Promise<Password> {
-    await this.database.begin();
-
     try {
       const passwordUpdateQuery = new SqlQueryHelper();
       passwordUpdateQuery.setTable('password');
@@ -188,12 +174,11 @@ export class PasswordRepository
         passwordUpdateQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(updatedPassword[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 }

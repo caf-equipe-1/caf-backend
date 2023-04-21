@@ -18,8 +18,6 @@ export class AppRepository
   }
 
   public async create(userId: string, appData: AppType): Promise<App> {
-    await this.database.begin();
-
     try {
       const appCreationQuery = new SqlQueryHelper();
       appCreationQuery.setTable('app');
@@ -46,18 +44,15 @@ export class AppRepository
 
       await this.database.executeSqlQuery(userAppRelationQuery.getSqlQuery());
 
-      await this.database.commit();
-
       return this.adaptProperties(createdApp[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getOne(appId: string): Promise<App> {
-    await this.database.begin();
-
     try {
       const appSearchQuery = new SqlQueryHelper();
       appSearchQuery.setTable('app');
@@ -68,18 +63,15 @@ export class AppRepository
         appSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(foundApp[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async getAll(userId: string): Promise<App[]> {
-    await this.database.begin();
-
     try {
       const appSearchQuery = new SqlQueryHelper();
       appSearchQuery.setTable('app');
@@ -95,20 +87,17 @@ export class AppRepository
         appSearchQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return foundApps.map((item: any) =>
         this.adaptProperties({ ...item, id: item.appid }),
       );
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async delete(appId: string): Promise<App> {
-    await this.database.begin();
-
     try {
       const appDeleteQuery = new SqlQueryHelper();
       appDeleteQuery.setTable('app');
@@ -120,18 +109,15 @@ export class AppRepository
         appDeleteQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(deletedApp[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 
   public async update(appId: string, appData: AppType): Promise<App> {
-    await this.database.begin();
-
     try {
       const appUpdateQuery = new SqlQueryHelper();
       appUpdateQuery.setTable('app');
@@ -149,12 +135,11 @@ export class AppRepository
         appUpdateQuery.getSqlQuery(),
       );
 
-      await this.database.commit();
-
       return this.adaptProperties(updatedApp[0]);
     } catch (error) {
       console.log(error);
-      await this.database.rollback();
+
+      return;
     }
   }
 }

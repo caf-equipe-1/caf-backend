@@ -19,23 +19,18 @@ class Migration {
     database.connect();
 
     try {
-      database.begin().then(() => {
-        database.executeSqlQuery(userTable).then(() => {
-          database.executeSqlQuery(passwordTable).then(() => {
-            database.executeSqlQuery(documentTable).then(() => {
-              database.executeSqlQuery(cardTable).then(() => {
-                database.executeSqlQuery(appTable).then(() => {
-                  database.executeSqlQuery(userPasswordTable).then(() => {
-                    database.executeSqlQuery(userDocumentTable).then(() => {
-                      database.executeSqlQuery(userCardTable).then(() => {
-                        database.executeSqlQuery(userAppTable).then(() => {
-                          database.commit().then(() => {
-                            database.disconnect().then(() => {
-                              console.log('Migration executed');
-                              process.exit();
-                            });
-                          });
-                        });
+      database.executeSqlQuery(userTable).then(() => {
+        database.executeSqlQuery(passwordTable).then(() => {
+          database.executeSqlQuery(documentTable).then(() => {
+            database.executeSqlQuery(cardTable).then(() => {
+              database.executeSqlQuery(appTable).then(() => {
+                database.executeSqlQuery(userPasswordTable).then(() => {
+                  database.executeSqlQuery(userDocumentTable).then(() => {
+                    database.executeSqlQuery(userCardTable).then(() => {
+                      database.executeSqlQuery(userAppTable).then(() => {
+                        database.disconnect();
+                        console.log('Migration executed');
+                        process.exit();
                       });
                     });
                   });

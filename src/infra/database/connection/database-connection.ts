@@ -11,29 +11,52 @@ export class DatabaseConnection implements DatabaseConnectionInterface {
     });
   }
 
-  public async connect(): Promise<void> {
-    await this.client.connect();
-    return;
+  public async connect(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      resolve(this.client.connect());
+    });
   }
 
-  public async begin(): Promise<void> {
-    await this.client.query('BEGIN');
-    return;
+  public async begin(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.client.query('BEGIN', (error, response) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response.rows);
+        }
+      });
+    });
   }
 
-  public async rollback(): Promise<void> {
-    await this.client.query('ROLLBACK');
-    return;
+  public async rollback(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.client.query('ROLLBACK', (error, response) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response.rows);
+        }
+      });
+    });
   }
 
-  public async commit(): Promise<void> {
-    await this.client.query('COMMIT');
-    return;
+  public async commit(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.client.query('COMMIT', (error, response) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response.rows);
+        }
+      });
+    });
   }
 
-  public async disconnect(): Promise<void> {
-    this.client.end();
-    return;
+  public async disconnect(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      resolve(this.client.end());
+    });
   }
 
   public async executeSqlQuery(sqlQuery: string): Promise<any> {
