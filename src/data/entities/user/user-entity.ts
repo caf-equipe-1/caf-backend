@@ -68,6 +68,24 @@ export class UserEntity extends Entity implements UserEntityInterface {
       throw new InvalidParamError('Cpf');
     }
 
+    if (this.userDto.name.toString().length > 100) {
+      throw new InvalidParamError('Name too long');
+    }
+
+    if (this.userDto.email.toString().length > 100) {
+      throw new InvalidParamError('Email too long');
+    }
+
+    if (this.userDto.password.toString().length > 100) {
+      throw new InvalidParamError('Password too long');
+    }
+
+    if (this.userDto.cpf.toString().length > 11) {
+      throw new InvalidParamError(
+        'CPF must have a maximum length of 11 characters',
+      );
+    }
+
     return;
   }
 

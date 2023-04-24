@@ -100,13 +100,13 @@ export class UserRepository
     }
   }
 
-  public async getOneByCpf(userCnpj: string): Promise<User> {
+  public async getOneByCpf(userCpf: string): Promise<User> {
     try {
       const userSearchQuery = new SqlQueryHelper();
       userSearchQuery.setTable('user');
       userSearchQuery.setAction(sqlAction.SELECT);
       userSearchQuery.setWhere([
-        { field: 'cnpj', operator: '=', value: userCnpj },
+        { field: 'cpf', operator: '=', value: userCpf },
       ]);
 
       const foundUser = await this.database.executeSqlQuery(

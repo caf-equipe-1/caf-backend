@@ -27,6 +27,24 @@ export class UpdateUserUsecase implements UpdateUserUsecaseInterface {
       throw new InvalidParamError('Id');
     }
 
+    if (userDto.cpf) {
+      const foundByCpf = await this.userRepository.getOneByCpf(userDto.cpf);
+
+      if (foundByCpf && foundByCpf.id !== found.id) {
+        throw new InvalidParamError('Cpf already registered');
+      }
+    }
+
+    if (userDto.email) {
+      const foundByEmail = await this.userRepository.getOneByEmail(
+        userDto.email,
+      );
+
+      if (foundByEmail && foundByEmail.id !== found.id) {
+        throw new InvalidParamError('Email already registered');
+      }
+    }
+
     const entity = this.userEntity;
     entity.setData(userDto);
 

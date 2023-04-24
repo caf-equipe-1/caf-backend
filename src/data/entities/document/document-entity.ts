@@ -36,6 +36,10 @@ export class DocumentEntity extends Entity implements DocumentEntityInterface {
     if (typeof this.documentDto.document !== 'string') {
       throw new InvalidParamError('Document');
     }
+
+    if (this.documentDto.name.toString().length > 100) {
+      throw new InvalidParamError('Name too long');
+    }
   }
 
   public getBody(): DocumentType {

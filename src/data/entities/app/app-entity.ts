@@ -28,6 +28,10 @@ export class AppEntity extends Entity implements AppEntityInterface {
     if (typeof this.appDto.name !== 'string') {
       throw new InvalidParamError('Name');
     }
+
+    if (this.appDto.name.toString().length > 100) {
+      throw new InvalidParamError('Name too long');
+    }
   }
 
   public getBody(): AppType {

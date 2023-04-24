@@ -36,6 +36,10 @@ export class PasswordEntity extends Entity implements PasswordEntityInterface {
     if (typeof this.passwordDto.password !== 'string') {
       throw new InvalidParamError('Password');
     }
+
+    if (this.passwordDto.name.toString().length > 100) {
+      throw new InvalidParamError('Name too long');
+    }
   }
 
   public getBody(): PasswordType {

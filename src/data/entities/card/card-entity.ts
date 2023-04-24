@@ -52,6 +52,14 @@ export class CardEntity extends Entity implements CardEntityInterface {
     if (typeof this.cardDto.securityCode !== 'number') {
       throw new MissingParamError('Security Code');
     }
+
+    if (this.cardDto.name.toString().length > 100) {
+      throw new InvalidParamError('Name too long');
+    }
+
+    if (this.cardDto.nickname.toString().length > 100) {
+      throw new InvalidParamError('Nickname too long');
+    }
   }
 
   public getBody(): CardType {
