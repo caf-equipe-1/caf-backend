@@ -7,7 +7,11 @@
 
 ## Como rodar esse projeto
 
-Para utilizar esse projeto, primeiro baixe-o em sua máquina e cria um arquivo <b>.env</b> com variáveis de acordo com o arquivo <b>.env.example</b> .
+Para utilizar esse projeto, primeiro baixe-o em sua máquina e cria um arquivo <b>.env</b> com variáveis de acordo com o arquivo <b>.env.example</b> . Também será necessário a execução de uma migration para um banco de dados relacional Postgres com o seguinte comando:
+
+```bash
+$ npm run migrate
+```
 
 Tendo isso feito, o mesmo poderá ser utilizado tanto em servidor local quanto pelo auxílio do Docker.
 
@@ -53,7 +57,7 @@ $ docker run -p <porta_docker>:<porta_env> --env-file .env caf-backend
 
 - <a href="https://github.com/DouglasVolcato"> Douglas <a/>
 
-- <a href="https://github.com/he445"> Everton <a/>
+- <a href="https://github.com/FelipeKulote"> Felipe <a/>
 
 - <a href="https://github.com/Nayahto"> Izaú <a/>
 
