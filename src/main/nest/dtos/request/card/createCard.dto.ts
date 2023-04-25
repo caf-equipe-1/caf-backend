@@ -12,4 +12,7 @@ export class CreateCardDto {
 
   @ApiProperty()
   securityCode: number;
+
+  @ApiProperty()
+  password: number;
 }

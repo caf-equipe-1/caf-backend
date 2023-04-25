@@ -3,4 +3,5 @@ export type UpdateCardDto = {
   nickname: string;
   number: number;
   securityCode: number;
+  password: number;
 };

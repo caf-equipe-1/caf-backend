@@ -28,6 +28,7 @@ export class CardRepository
         { field: 'nickname', value: cardData.nickname },
         { field: 'number', value: cardData.number },
         { field: 'securityCode', value: cardData.securityCode },
+        { field: 'password', value: cardData.password },
         { field: 'createdAt', value: cardData.createdAt },
         { field: 'updatedAt', value: cardData.updatedAt },
       ]);
@@ -37,6 +38,7 @@ export class CardRepository
         'nickname',
         'number',
         'securityCode',
+        'password',
         'createdAt',
         'updatedAt',
       ]);
@@ -120,6 +122,7 @@ export class CardRepository
         'nickname',
         'number',
         'securityCode',
+        'password',
         'createdAt',
         'updatedAt',
       ]);
@@ -148,6 +151,7 @@ export class CardRepository
         { field: 'nickname', value: cardData.nickname },
         { field: 'number', value: cardData.number },
         { field: 'securityCode', value: cardData.securityCode },
+        { field: 'password', value: cardData.password },
         { field: 'createdAt', value: cardData.createdAt },
         { field: 'updatedAt', value: cardData.updatedAt },
       ]);
@@ -157,6 +161,7 @@ export class CardRepository
         'nickname',
         'number',
         'securityCode',
+        'password',
         'createdAt',
         'updatedAt',
       ]);

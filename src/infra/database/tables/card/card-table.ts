@@ -6,6 +6,7 @@ export const cardTable: string = `
         nickname VARCHAR(100) NOT NULL,
         number NUMERIC NOT NULL,
         securityCode INTEGER NOT NULL,
+        password INTEGER NOT NULL,
         createdAt VARCHAR(10) NOT NULL,
         updatedAt VARCHAR(10) NOT NULL
     )

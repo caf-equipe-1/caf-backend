@@ -12,4 +12,7 @@ export class UpdateCardDto {
 
   @ApiProperty()
   securityCode?: number;
+
+  @ApiProperty()
+  password?: number;
 }

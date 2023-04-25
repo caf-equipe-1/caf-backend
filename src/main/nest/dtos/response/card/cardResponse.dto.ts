@@ -5,6 +5,7 @@ export const cardResponseDto = {
     nickname: { type: 'string' },
     number: { type: 'number' },
     securityCode: { type: 'number' },
+    password: { type: 'number' },
     createdAt: { type: 'string' },
     updatedAt: { type: 'string' },
   },

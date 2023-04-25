@@ -19,7 +19,7 @@ async function bootstrap() {
   await databaseConnection.connect();
 
   const config = new DocumentBuilder()
-    .setTitle('FaceApp')
+    .setTitle('SnapGuard')
     .setDescription('APi made with Typescript and NestJS.')
     .setVersion('1.0.0')
     .addTag('Main')

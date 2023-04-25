@@ -37,6 +37,10 @@ export class CardEntity extends Entity implements CardEntityInterface {
       throw new MissingParamError('Security Code');
     }
 
+    if (!this.cardDto.password) {
+      throw new MissingParamError('Password');
+    }
+
     if (typeof this.cardDto.name !== 'string') {
       throw new InvalidParamError('Name');
     }
@@ -46,11 +50,15 @@ export class CardEntity extends Entity implements CardEntityInterface {
     }
 
     if (typeof this.cardDto.number !== 'number') {
-      throw new MissingParamError('Number');
+      throw new InvalidParamError('Number');
     }
 
     if (typeof this.cardDto.securityCode !== 'number') {
-      throw new MissingParamError('Security Code');
+      throw new InvalidParamError('Security Code');
+    }
+
+    if (typeof this.cardDto.password !== 'number') {
+      throw new InvalidParamError('Password');
     }
 
     if (this.cardDto.name.toString().length > 100) {
@@ -69,6 +77,7 @@ export class CardEntity extends Entity implements CardEntityInterface {
       nickname: this.cardDto.nickname,
       number: this.cardDto.number,
       securityCode: this.cardDto.securityCode,
+      password: this.cardDto.password,
       createdAt: this.getDate(),
       updatedAt: this.getDate(),
     };
@@ -81,6 +90,7 @@ export class CardEntity extends Entity implements CardEntityInterface {
       nickname: this.cardDto.nickname ?? mainData.nickname,
       number: this.cardDto.number ?? mainData.number,
       securityCode: this.cardDto.securityCode ?? mainData.securityCode,
+      password: this.cardDto.password ?? mainData.password,
       createdAt: mainData.createdAt,
       updatedAt: this.getDate(),
     };
