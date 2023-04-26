@@ -29,6 +29,7 @@ export class UpdateDocumentUsecase implements UpdateDocumentUsecaseInterface {
 
     const entity = this.documentEntity;
     entity.setData(documentDto);
+    entity.validateUpdate();
 
     const updated = await this.documentRepository.update(
       documentId,

@@ -47,6 +47,7 @@ export class UpdateUserUsecase implements UpdateUserUsecaseInterface {
 
     const entity = this.userEntity;
     entity.setData(userDto);
+    entity.validateUpdate();
 
     const updated = await this.userRepository.update(
       userId,

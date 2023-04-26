@@ -29,6 +29,7 @@ export class UpdateAppUsecase implements UpdateAppUsecaseInterface {
 
     const entity = this.appEntity;
     entity.setData(appDto);
+    entity.validateUpdate();
 
     const updated = await this.appRepository.update(
       appId,

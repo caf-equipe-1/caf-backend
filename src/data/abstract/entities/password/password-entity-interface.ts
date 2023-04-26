@@ -7,4 +7,5 @@ export interface PasswordEntityInterface {
   validate(): void;
   getBody(): PasswordType;
   updateData(mainData: Password): PasswordType;
+  validateUpdate(): void;
 }

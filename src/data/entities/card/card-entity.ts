@@ -95,4 +95,44 @@ export class CardEntity extends Entity implements CardEntityInterface {
       updatedAt: this.getDate(),
     };
   }
+
+  public validateUpdate(): void {
+    if (this.cardDto.name) {
+      if (typeof this.cardDto.name !== 'string') {
+        throw new InvalidParamError('Name');
+      }
+
+      if (this.cardDto.name.toString().length > 100) {
+        throw new InvalidParamError('Name too long');
+      }
+    }
+
+    if (this.cardDto.nickname) {
+      if (typeof this.cardDto.nickname !== 'string') {
+        throw new InvalidParamError('Nickname');
+      }
+
+      if (this.cardDto.nickname.toString().length > 100) {
+        throw new InvalidParamError('Nickname too long');
+      }
+    }
+
+    if (this.cardDto.number) {
+      if (typeof this.cardDto.number !== 'number') {
+        throw new InvalidParamError('Number');
+      }
+    }
+
+    if (this.cardDto.securityCode) {
+      if (typeof this.cardDto.securityCode !== 'number') {
+        throw new InvalidParamError('Security Code');
+      }
+    }
+
+    if (this.cardDto.password) {
+      if (typeof this.cardDto.password !== 'number') {
+        throw new InvalidParamError('Password');
+      }
+    }
+  }
 }

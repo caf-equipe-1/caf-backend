@@ -51,4 +51,16 @@ export class AppEntity extends Entity implements AppEntityInterface {
       updatedAt: this.getDate(),
     };
   }
+
+  public validateUpdate(): void {
+    if (this.appDto.name) {
+      if (typeof this.appDto.name !== 'string') {
+        throw new InvalidParamError('Name');
+      }
+
+      if (this.appDto.name.toString().length > 100) {
+        throw new InvalidParamError('Name too long');
+      }
+    }
+  }
 }

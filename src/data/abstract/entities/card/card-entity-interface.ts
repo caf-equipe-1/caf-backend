@@ -7,4 +7,5 @@ export interface CardEntityInterface {
   validate(): void;
   getBody(): CardType;
   updateData(mainData: Card): CardType;
+  validateUpdate(): void;
 }

@@ -7,4 +7,5 @@ export interface AppEntityInterface {
   validate(): void;
   getBody(): AppType;
   updateData(mainData: App): AppType;
+  validateUpdate(): void;
 }

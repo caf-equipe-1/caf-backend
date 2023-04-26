@@ -8,4 +8,5 @@ export interface UserEntityInterface {
   validate(): void;
   getBody(): UserType;
   updateData(mainData: User): UserType;
+  validateUpdate(): void;
 }

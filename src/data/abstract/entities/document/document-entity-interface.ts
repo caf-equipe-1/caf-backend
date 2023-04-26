@@ -7,4 +7,5 @@ export interface DocumentEntityInterface {
   validate(): void;
   getBody(): DocumentType;
   updateData(mainData: Document): DocumentType;
+  validateUpdate(): void;
 }

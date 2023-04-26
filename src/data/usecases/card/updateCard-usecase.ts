@@ -29,6 +29,7 @@ export class UpdateCardUsecase implements UpdateCardUsecaseInterface {
 
     const entity = this.cardEntity;
     entity.setData(cardDto);
+    entity.validateUpdate();
 
     const updated = await this.cardRepository.update(
       cardId,

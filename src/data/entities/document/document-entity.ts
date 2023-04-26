@@ -61,4 +61,22 @@ export class DocumentEntity extends Entity implements DocumentEntityInterface {
       updatedAt: this.getDate(),
     };
   }
+
+  public validateUpdate(): void {
+    if (this.documentDto.name) {
+      if (typeof this.documentDto.name !== 'string') {
+        throw new InvalidParamError('Name');
+      }
+
+      if (this.documentDto.name.toString().length > 100) {
+        throw new InvalidParamError('Name too long');
+      }
+    }
+
+    if (this.documentDto.document) {
+      if (typeof this.documentDto.document !== 'string') {
+        throw new InvalidParamError('Document');
+      }
+    }
+  }
 }

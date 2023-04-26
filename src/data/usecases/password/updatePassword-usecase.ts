@@ -29,6 +29,7 @@ export class UpdatePasswordUsecase implements UpdatePasswordUsecaseInterface {
 
     const entity = this.passwordEntity;
     entity.setData(passwordDto);
+    entity.validateUpdate();
 
     const updated = await this.passwordRepository.update(
       passwordId,

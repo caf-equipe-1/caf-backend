@@ -128,4 +128,56 @@ export class UserEntity extends Entity implements UserEntityInterface {
       updatedAt: this.getDate(),
     };
   }
+
+  public validateUpdate(): void {
+    if (this.userDto.name) {
+      if (typeof this.userDto.name !== 'string') {
+        throw new InvalidParamError('Name');
+      }
+
+      if (this.userDto.name.toString().length > 100) {
+        throw new InvalidParamError('Name too long');
+      }
+    }
+
+    if (this.userDto.email) {
+      if (typeof this.userDto.email !== 'string') {
+        throw new InvalidParamError('Email');
+      }
+
+      if (this.userDto.email.toString().length > 100) {
+        throw new InvalidParamError('Email too long');
+      }
+    }
+
+    if (this.userDto.password) {
+      if (typeof this.userDto.password !== 'string') {
+        throw new InvalidParamError('Password');
+      }
+
+      if (this.userDto.password.toString().length > 100) {
+        throw new InvalidParamError('Password too long');
+      }
+    }
+
+    if (this.userDto.photo) {
+      if (typeof this.userDto.photo !== 'string') {
+        throw new InvalidParamError('Photo');
+      }
+    }
+
+    if (this.userDto.cpf) {
+      if (typeof this.userDto.cpf !== 'string') {
+        throw new InvalidParamError('Cpf');
+      }
+
+      if (this.userDto.cpf.toString().length > 11) {
+        throw new InvalidParamError(
+          'CPF must have a maximum length of 11 characters',
+        );
+      }
+    }
+
+    return;
+  }
 }

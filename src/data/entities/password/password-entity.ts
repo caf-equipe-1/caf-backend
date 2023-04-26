@@ -40,6 +40,10 @@ export class PasswordEntity extends Entity implements PasswordEntityInterface {
     if (this.passwordDto.name.toString().length > 100) {
       throw new InvalidParamError('Name too long');
     }
+
+    if (this.passwordDto.password.toString().length > 100) {
+      throw new InvalidParamError('Password too long');
+    }
   }
 
   public getBody(): PasswordType {
@@ -60,5 +64,27 @@ export class PasswordEntity extends Entity implements PasswordEntityInterface {
       createdAt: mainData.createdAt,
       updatedAt: this.getDate(),
     };
+  }
+
+  public validateUpdate(): void {
+    if (this.passwordDto.name) {
+      if (typeof this.passwordDto.name !== 'string') {
+        throw new InvalidParamError('Name');
+      }
+
+      if (this.passwordDto.name.toString().length > 100) {
+        throw new InvalidParamError('Name too long');
+      }
+    }
+
+    if (this.passwordDto.password) {
+      if (typeof this.passwordDto.password !== 'string') {
+        throw new InvalidParamError('Password');
+      }
+
+      if (this.passwordDto.password.toString().length > 100) {
+        throw new InvalidParamError('Password too long');
+      }
+    }
   }
 }
