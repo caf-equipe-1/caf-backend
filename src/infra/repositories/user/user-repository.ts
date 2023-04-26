@@ -113,7 +113,15 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
-      return this.adaptProperties(foundUser[0]);
+      if (foundUser.length > 0) {
+        const userRelations = await this.getRelations(foundUser[0].id);
+        const user = {
+          ...this.adaptProperties(foundUser[0]),
+          ...userRelations,
+        };
+
+        return user;
+      }
     } catch (error) {
       console.log(error);
 
@@ -133,7 +141,15 @@ export class UserRepository
         userSearchQuery.getSqlQuery(),
       );
 
-      return this.adaptProperties(foundUser[0]);
+      if (foundUser.length > 0) {
+        const userRelations = await this.getRelations(foundUser[0].id);
+        const user = {
+          ...this.adaptProperties(foundUser[0]),
+          ...userRelations,
+        };
+
+        return user;
+      }
     } catch (error) {
       console.log(error);
 
