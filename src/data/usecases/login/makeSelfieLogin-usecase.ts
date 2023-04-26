@@ -26,7 +26,6 @@ export class MakeSelfieLoginUseCase implements MakeSelfieLoginUseCaseInterface {
     if (foundUser) {
       const comparison = await this.faceAuthentication.authenticate({
         peopleId: selfieLoginDto.cpf,
-        imageBase64: selfieLoginDto.selfie,
         imageUrl: '',
       });
 
