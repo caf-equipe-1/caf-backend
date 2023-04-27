@@ -3,17 +3,25 @@ export class Repository {
     if (item) {
       const adaptedItem = item;
 
-      adaptedItem.createdAt = item.createdat;
-      adaptedItem.updatedAt = item.updatedat;
+      if (item.userid) {
+        adaptedItem.userId = item.userid;
+        delete adaptedItem.userid;
+      }
+
+      if (item.createdat) {
+        adaptedItem.createdAt = item.createdat;
+        delete adaptedItem.createdat;
+      }
+
+      if (item.updatedat) {
+        adaptedItem.updatedAt = item.updatedat;
+        delete adaptedItem.updatedat;
+      }
 
       if (item.securitycode) {
         adaptedItem.securityCode = item.securitycode;
-
         delete adaptedItem.securitycode;
       }
-
-      delete adaptedItem.createdat;
-      delete adaptedItem.updatedat;
 
       return adaptedItem;
     }

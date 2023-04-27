@@ -32,7 +32,10 @@ export class MakeEmailLoginUseCase implements MakeEmailLoginUseCaseInterface {
       );
 
       if (comparison) {
-        const token = this.tokenHandler.generateToken(foundUser.id, secret);
+        const token = this.tokenHandler.generateToken(
+          { id: foundUser.id },
+          secret,
+        );
 
         return {
           token,

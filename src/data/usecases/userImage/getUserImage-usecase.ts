@@ -1,21 +1,21 @@
 import { GetUserImageUsecaseInterface } from 'src/data/abstract/usecases/userImage/getUserImage-usecase-interface';
-import { UserRepositoryInterface } from 'src/infra/abstract/repositories/user/user-repository-interface';
+import { TempImageRepositoryInterface } from 'src/infra/abstract/repositories/tempImage/tempImage-repository-interface';
 import { InvalidParamError } from 'src/utils/errors/invalidParam-error';
 
 export class GetUserImageUsecase implements GetUserImageUsecaseInterface {
-  private readonly userRepository: UserRepositoryInterface;
+  private readonly tempImageRepository: TempImageRepositoryInterface;
 
-  public constructor(userRepository: UserRepositoryInterface) {
-    this.userRepository = userRepository;
+  public constructor(tempImageRepository: TempImageRepositoryInterface) {
+    this.tempImageRepository = tempImageRepository;
   }
 
   public async execute(userId: string): Promise<string> {
-    const foundUser = this.userRepository.getOneById(userId);
+    const foundUserImage = await this.tempImageRepository.getOne(userId);
 
-    if (!foundUser) {
+    if (!foundUserImage) {
       throw new InvalidParamError('Id');
     }
 
-    return (await foundUser).photo;
+    return foundUserImage.photo;
   }
 }

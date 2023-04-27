@@ -7,8 +7,8 @@ import { InvalidParamError } from 'src/utils/errors/invalidParam-error';
 export class TokenHandlerAdapter implements TokenHandlerAdapterInterface {
   public constructor(private readonly getOneUserUsecase: GetOneUserUsecase) {}
 
-  public generateToken(userId: string, secret: string): string {
-    return jwt.sign({ id: userId }, secret, {
+  public generateToken(content: any, secret: string): string {
+    return jwt.sign(content, secret, {
       expiresIn: 86400,
     });
   }
