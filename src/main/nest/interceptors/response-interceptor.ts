@@ -12,7 +12,9 @@ export class ResponseInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       tap((data) => {
-        throw new HttpException(data, data.statusCode);
+        if (data && data.statusCode) {
+          throw new HttpException(data, data.statusCode);
+        }
       }),
     );
   }

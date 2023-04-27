@@ -14,4 +14,8 @@ export class EnvVariables {
   public static getSecret(): string {
     return process.env.SECRET;
   }
+
+  public static getBackendUrl(): string {
+    return process.env.BACKEND_URL;
+  }
 }

@@ -9,6 +9,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from '../../interceptors/response-interceptor';
 import { EmailLoginModule } from '../login/emailLogin.module';
 import { SelfieLoginModule } from '../login/selfieLogin.module';
+import { UserImageModule } from '../userImage/userImage.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SelfieLoginModule } from '../login/selfieLogin.module';
     UserModule,
     EmailLoginModule,
     SelfieLoginModule,
+    UserImageModule,
   ],
   controllers: [MainController],
   providers: [
