@@ -6,5 +6,5 @@ ENV SECRET=${SECRET} \
     PORT=${PORT} \
     DATABASE_URL=${DATABASE_URL}
 EXPOSE ${PORT}
-RUN npm run migrate
+# RUN npm run migrate
 CMD ["npm", "run", "start"]
