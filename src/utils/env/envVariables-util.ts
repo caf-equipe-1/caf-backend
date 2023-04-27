@@ -18,4 +18,16 @@ export class EnvVariables {
   public static getBackendUrl(): string {
     return process.env.BACKEND_URL;
   }
+
+  public static getAuthApiUrl(): string {
+    return process.env.AUTH_API_URL;
+  }
+
+  public static getAuthApiUserId(): string {
+    return process.env.AUTH_API_USERID;
+  }
+
+  public static getAuthApiSecret(): string {
+    return process.env.AUTH_API_SECRET;
+  }
 }
