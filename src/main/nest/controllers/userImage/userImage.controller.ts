@@ -4,7 +4,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 import { GetUserImageController } from 'src/presentation/controllers/userImage/getUserImage-controller';
-import * as fs from 'fs';
 
 @ApiTags('UserImages')
 @Controller('/user-images')
