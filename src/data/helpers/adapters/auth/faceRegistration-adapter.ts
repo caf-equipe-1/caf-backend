@@ -26,15 +26,6 @@ export class FaceRegistrationAdapter
     const token = this.generateToken();
     const apiUrl = EnvVariables.getAuthApiUrl();
 
-    console.log('<<<<<<<<< DEBUG DADOS ENVIADOS API <<<<<<<<<');
-    console.log('Token:');
-    console.log(token);
-    console.log('URL');
-    console.log(apiUrl);
-    console.log('Body');
-    console.log(faceRegistrationRequest);
-    console.log('<<<<<<<<< DEBUG DADOS ENVIADOS API <<<<<<<<<');
-
     const registration = await this.httpRequestAdapter.post(
       `${apiUrl}/register`,
       faceRegistrationRequest,

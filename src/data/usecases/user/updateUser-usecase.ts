@@ -62,15 +62,15 @@ export class UpdateUserUsecase implements UpdateUserUsecaseInterface {
       entity.updateData(found),
     );
 
-    const tempImageLink = await this.generateUserImageLinkUsecase.execute(
-      updated.id,
-      updated.photo,
-    );
+    // const tempImageLink = await this.generateUserImageLinkUsecase.execute(
+    //   updated.id,
+    //   updated.photo,
+    // );
 
-    const apiRegister = await this.faceRegistrationAdapter.registrate({
-      peopleId: updated.cpf,
-      imageUrl: tempImageLink,
-    });
+    // const apiRegister = await this.faceRegistrationAdapter.registrate({
+    //   peopleId: updated.cpf,
+    //   imageUrl: tempImageLink,
+    // });
 
     return updated;
   }

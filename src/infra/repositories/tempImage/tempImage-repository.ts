@@ -55,7 +55,7 @@ export class TempImageRepository
         tempImageSearchQuery.getSqlQuery(),
       );
 
-      // await this.delete(userId);
+      await this.delete(userId);
 
       return this.adaptProperties(foundTempImage[0]);
     } catch (error) {

@@ -29,7 +29,7 @@ export class UserImageController {
   public async getOne(@Param('id') id: string, @Res() res: Response) {
     const httpRequest: HttpRequest<object> = { id };
 
-    const response = await this.getUserImageController.execute(httpRequest);
+    const image = await this.getUserImageController.execute(httpRequest);
 
     res.type('text/html');
 
@@ -39,7 +39,7 @@ export class UserImageController {
           <title>Imagem</title>
         </head>
         <body>
-          <img src="${response.body}" />
+          <img src="${image.body}" />
         </body>
       </html>
     `);

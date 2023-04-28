@@ -46,23 +46,15 @@ export class CreateUserUsecase implements CreateUserUsecaseInterface {
 
     const created = await this.userRepository.create(enity.getBody());
 
-    const tempImageLink = await this.generateUserImageLinkUsecase.execute(
-      created.id,
-      created.photo,
-    );
+    // const tempImageLink = await this.generateUserImageLinkUsecase.execute(
+    //   created.id,
+    //   created.photo,
+    // );
 
-    const apiRegister = await this.faceRegistrationAdapter.registrate({
-      peopleId: created.cpf,
-      imageUrl: tempImageLink,
-    });
-
-    console.log('>>>>>>>>>> DEBUG >>>>>>>>>> ');
-    console.log('DADOS:');
-    console.log(created.cpf);
-    console.log(tempImageLink);
-    console.log('RESPOSTA API:');
-    console.log(apiRegister);
-    console.log('>>>>>>>>>> DEBUG >>>>>>>>>> ');
+    // const apiRegister = await this.faceRegistrationAdapter.registrate({
+    //   peopleId: created.cpf,
+    //   imageUrl: tempImageLink,
+    // });
 
     return created;
   }
