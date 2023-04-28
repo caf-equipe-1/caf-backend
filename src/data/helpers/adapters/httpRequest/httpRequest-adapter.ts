@@ -13,9 +13,10 @@ export class HttpRequestAdapter implements HttpRequestAdapterInterface {
           Authorization: authorizationHeader,
         },
       });
+
       return response.data;
     } catch (error: any) {
-      return error.response.data;
+      return error.message;
     }
   }
 
@@ -30,9 +31,10 @@ export class HttpRequestAdapter implements HttpRequestAdapterInterface {
           Authorization: authorizationHeader,
         },
       });
+
       return response.data;
     } catch (error: any) {
-      return error.response.data;
+      return error.message;
     }
   }
 
@@ -43,9 +45,10 @@ export class HttpRequestAdapter implements HttpRequestAdapterInterface {
           Authorization: authorizationHeader,
         },
       });
+
       return response.data;
     } catch (error: any) {
-      return error.response.data;
+      return error.message;
     }
   }
 
@@ -56,9 +59,10 @@ export class HttpRequestAdapter implements HttpRequestAdapterInterface {
           Authorization: authorizationHeader,
         },
       });
+
       return response.data;
     } catch (error: any) {
-      return error.response.data;
+      return error.message;
     }
   }
 }
