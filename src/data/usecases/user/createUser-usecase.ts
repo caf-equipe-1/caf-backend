@@ -56,6 +56,14 @@ export class CreateUserUsecase implements CreateUserUsecaseInterface {
       imageUrl: tempImageLink,
     });
 
+    console.log('>>>>>>>>>> DEBUG >>>>>>>>>> ');
+    console.log('DADOS:');
+    console.log(created.cpf);
+    console.log(tempImageLink);
+    console.log('RESPOSTA API:');
+    console.log(apiRegister);
+    console.log('>>>>>>>>>> DEBUG >>>>>>>>>> ');
+
     return created;
   }
 }
