@@ -75,11 +75,11 @@ export class TempImageRepository
       ]);
       tempImageDeleteQuery.setReturn(['id', 'userId', 'photo']);
 
-      const deletedTempImage = await this.database.executeSqlQuery(
-        tempImageDeleteQuery.getSqlQuery(),
-      );
+      // const deletedTempImage = await this.database.executeSqlQuery(
+      //   tempImageDeleteQuery.getSqlQuery(),
+      // );
 
-      return this.adaptProperties(deletedTempImage[0]);
+      // return this.adaptProperties(deletedTempImage[0]);
     } catch (error) {
       console.log(error);
 
