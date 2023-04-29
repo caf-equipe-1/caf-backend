@@ -16,19 +16,18 @@ export class TempImageRepository
     this.database = database;
   }
 
-  public async create(userId: string, selfie: string): Promise<TempImageType> {
+  public async create(id: string, selfie: string): Promise<TempImageType> {
     try {
-      await this.delete(userId);
+      await this.delete(id);
 
       const tempImageCreationQuery = new SqlQueryHelper();
       tempImageCreationQuery.setTable('tempimage');
       tempImageCreationQuery.setAction(sqlAction.INSERT);
       tempImageCreationQuery.setValues([
-        { field: 'id', value: userId },
-        { field: 'userId', value: userId },
+        { field: 'id', value: id },
         { field: 'photo', value: selfie },
       ]);
-      tempImageCreationQuery.setReturn(['id', 'userId', 'photo']);
+      tempImageCreationQuery.setReturn(['id', 'photo']);
 
       const createdTempImage = await this.database.executeSqlQuery(
         tempImageCreationQuery.getSqlQuery(),
@@ -42,20 +41,20 @@ export class TempImageRepository
     }
   }
 
-  public async getOne(userId: string): Promise<TempImageType> {
+  public async getOne(id: string): Promise<TempImageType> {
     try {
       const tempImageSearchQuery = new SqlQueryHelper();
       tempImageSearchQuery.setTable('tempimage');
       tempImageSearchQuery.setAction(sqlAction.SELECT);
       tempImageSearchQuery.setWhere([
-        { field: 'userId', operator: '=', value: userId },
+        { field: 'id', operator: '=', value: id },
       ]);
 
       const foundTempImage = await this.database.executeSqlQuery(
         tempImageSearchQuery.getSqlQuery(),
       );
 
-      await this.delete(userId);
+      await this.delete(id);
 
       return this.adaptProperties(foundTempImage[0]);
     } catch (error) {
@@ -65,15 +64,15 @@ export class TempImageRepository
     }
   }
 
-  private async delete(userId: string): Promise<TempImageType> {
+  private async delete(id: string): Promise<TempImageType> {
     try {
       const tempImageDeleteQuery = new SqlQueryHelper();
       tempImageDeleteQuery.setTable('tempimage');
       tempImageDeleteQuery.setAction(sqlAction.DELETE);
       tempImageDeleteQuery.setWhere([
-        { field: 'userId', operator: '=', value: userId },
+        { field: 'id', operator: '=', value: id },
       ]);
-      tempImageDeleteQuery.setReturn(['id', 'userId', 'photo']);
+      tempImageDeleteQuery.setReturn(['id', 'photo']);
 
       const deletedTempImage = await this.database.executeSqlQuery(
         tempImageDeleteQuery.getSqlQuery(),

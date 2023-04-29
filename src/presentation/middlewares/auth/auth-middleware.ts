@@ -1,4 +1,4 @@
-import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/tokenHandler/tokenHandler-adapter-interface';
+import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/adapters/tokenHandler/tokenHandler-adapter-interface';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { UnauthorizedError } from 'src/utils/errors/unauthorized-error';
 import { AuthMiddlewareInterface } from '../../abstract/middleware/auth-middleware-interface';

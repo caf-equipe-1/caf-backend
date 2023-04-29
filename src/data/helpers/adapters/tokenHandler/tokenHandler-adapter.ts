@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/tokenHandler/tokenHandler-adapter-interface';
+import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/adapters/tokenHandler/tokenHandler-adapter-interface';
 import { GetOneUserUsecase } from 'src/data/usecases/user/getOneUser-usecase';
 import { User } from 'src/domain/entities/user/user-entity';
 import { InvalidParamError } from 'src/utils/errors/invalidParam-error';

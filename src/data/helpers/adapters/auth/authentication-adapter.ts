@@ -1,4 +1,4 @@
-import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/tokenHandler/tokenHandler-adapter-interface';
+import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/adapters/tokenHandler/tokenHandler-adapter-interface';
 import { EnvVariables } from 'src/utils/env/envVariables-util';
 
 export class AuthenticationAdapter {

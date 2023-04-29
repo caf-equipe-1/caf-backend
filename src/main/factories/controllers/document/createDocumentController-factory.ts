@@ -1,5 +1,6 @@
 import { DocumentEntity } from 'src/data/entities/document/document-entity';
 import { IdGeneratorAdapter } from 'src/data/helpers/adapters/idGenerator/idGenerator-adapter';
+import { FileHelper } from 'src/data/helpers/file/file-helper';
 import { CreateDocumentUsecase } from 'src/data/usecases/document/createDocument-usecase';
 import { DatabaseConnection } from 'src/infra/database/connection/database-connection';
 import { DocumentRepository } from 'src/infra/repositories/document/document-repository';
@@ -10,7 +11,8 @@ export function makeCreateDocumentControllerFactory(): CreateDocumentControllerI
   const database = new DatabaseConnection();
   const documentRepository = new DocumentRepository(database);
   const idGenerator = new IdGeneratorAdapter();
-  const documentEntity = new DocumentEntity(idGenerator);
+  const fileHelper = new FileHelper();
+  const documentEntity = new DocumentEntity(idGenerator, fileHelper);
   const createDocumentUsecase = new CreateDocumentUsecase(
     documentRepository,
     documentEntity,

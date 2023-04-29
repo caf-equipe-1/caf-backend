@@ -8,6 +8,7 @@ import { InvalidParamError } from 'src/utils/errors/invalidParam-error';
 import { HashAdapterInterface } from 'src/data/abstract/helpers/adapters/hash/hash-adapter-interface';
 import { IdGeneratorAdapterInterface } from 'src/data/abstract/helpers/adapters/idGenerator/idGenerator-adapter-interface';
 import { UserEntityInterface } from 'src/data/abstract/entities/user/user-entity-interface';
+import { FileHelperInterface } from 'src/data/abstract/helpers/file/file-helper-interface';
 
 export class UserEntity extends Entity implements UserEntityInterface {
   private readonly idGenerator: IdGeneratorAdapterInterface;
@@ -17,8 +18,9 @@ export class UserEntity extends Entity implements UserEntityInterface {
   public constructor(
     idGenerator: IdGeneratorAdapterInterface,
     hasher: HashAdapterInterface,
+    fileHelper: FileHelperInterface,
   ) {
-    super();
+    super(fileHelper);
     this.idGenerator = idGenerator;
     this.hasher = hasher;
   }
@@ -84,6 +86,10 @@ export class UserEntity extends Entity implements UserEntityInterface {
       throw new InvalidParamError(
         'CPF must have a maximum length of 11 characters',
       );
+    }
+
+    if (!this.validateFileType(this.userDto.photo)) {
+      throw new InvalidParamError('Invalid image type');
     }
 
     return;

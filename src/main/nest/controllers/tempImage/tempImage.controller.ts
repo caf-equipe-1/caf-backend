@@ -3,13 +3,13 @@ import { Response } from 'express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
 import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
-import { GetUserImageController } from 'src/presentation/controllers/userImage/getUserImage-controller';
+import { GetTempImageController } from 'src/presentation/controllers/tempImage/getTempImage-controller';
 
-@ApiTags('UserImages')
+@ApiTags('TempImages')
 @Controller('/user-images')
-export class UserImageController {
+export class TempImageController {
   constructor(
-    private readonly getUserImageController: GetUserImageController,
+    private readonly getTempImageController: GetTempImageController,
   ) {}
 
   @ApiResponse({
@@ -29,19 +29,17 @@ export class UserImageController {
   public async getOne(@Param('id') id: string, @Res() res: Response) {
     const httpRequest: HttpRequest<object> = { id };
 
-    const image = await this.getUserImageController.execute(httpRequest);
+    const { body } = await this.getTempImageController.execute(httpRequest);
+    const image = body.image;
+    const imageType = body.imageType;
 
-    res.type('text/html');
+    const binaryData = Buffer.from(image, 'base64');
 
-    res.send(`
-      <html>
-        <head>
-          <title>Imagem</title>
-        </head>
-        <body>
-          <img src="${image.body}" />
-        </body>
-      </html>
-    `);
+    res.setHeader('Content-Type', `image/${imageType}`);
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=image.${imageType}`,
+    );
+    res.send(binaryData);
   }
 }

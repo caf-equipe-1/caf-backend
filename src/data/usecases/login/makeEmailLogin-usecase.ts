@@ -1,5 +1,5 @@
 import { HashAdapterInterface } from 'src/data/abstract/helpers/adapters/hash/hash-adapter-interface';
-import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/tokenHandler/tokenHandler-adapter-interface';
+import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/adapters/tokenHandler/tokenHandler-adapter-interface';
 import { MakeEmailLoginUseCaseInterface } from 'src/data/abstract/usecases/login/makeEmailLogin-usecase-interface';
 import { EmailLoginDto } from 'src/domain/dtos/login/emailLogin-dto';
 import { LoggedUserDto } from 'src/domain/dtos/login/loggedUser-dto';

@@ -1,7 +1,7 @@
 import { UserEntityInterface } from 'src/data/abstract/entities/user/user-entity-interface';
 import { FaceRegistrationAdapterInterface } from 'src/data/abstract/helpers/adapters/auth/faceRegistration-adapter-interface';
 import { UpdateUserUsecaseInterface } from 'src/data/abstract/usecases/user/updateUser-usecase-interface';
-import { GenerateUserImageLinkUsecaseInterface } from 'src/data/abstract/usecases/userImage/generateUserImageLink-usecase-interface';
+import { GenerateTempImageLinkUsecaseInterface } from 'src/data/abstract/usecases/tempImage/generateTempImageLink-usecase-interface';
 import { UpdateProfileDto } from 'src/domain/dtos/registration/updateProfile-dto';
 import { User } from 'src/domain/entities/user/user-entity';
 import { UserRepositoryInterface } from 'src/infra/abstract/repositories/user/user-repository-interface';
@@ -11,18 +11,18 @@ export class UpdateUserUsecase implements UpdateUserUsecaseInterface {
   private readonly userRepository: UserRepositoryInterface;
   private readonly userEntity: UserEntityInterface;
   private readonly faceRegistrationAdapter: FaceRegistrationAdapterInterface;
-  private readonly generateUserImageLinkUsecase: GenerateUserImageLinkUsecaseInterface;
+  private readonly generateTempImageLinkUsecase: GenerateTempImageLinkUsecaseInterface;
 
   public constructor(
     userRepository: UserRepositoryInterface,
     userEntity: UserEntityInterface,
     faceRegistrationAdapter: FaceRegistrationAdapterInterface,
-    generateUserImageLinkUsecase: GenerateUserImageLinkUsecaseInterface,
+    generateTempImageLinkUsecase: GenerateTempImageLinkUsecaseInterface,
   ) {
     this.userRepository = userRepository;
     this.userEntity = userEntity;
     this.faceRegistrationAdapter = faceRegistrationAdapter;
-    this.generateUserImageLinkUsecase = generateUserImageLinkUsecase;
+    this.generateTempImageLinkUsecase = generateTempImageLinkUsecase;
   }
 
   public async execute(
@@ -62,15 +62,14 @@ export class UpdateUserUsecase implements UpdateUserUsecaseInterface {
       entity.updateData(found),
     );
 
-    // const tempImageLink = await this.generateUserImageLinkUsecase.execute(
-    //   updated.id,
-    //   updated.photo,
-    // );
+    const tempImageLink = await this.generateTempImageLinkUsecase.execute(
+      updated.photo,
+    );
 
-    // const apiRegister = await this.faceRegistrationAdapter.registrate({
-    //   peopleId: updated.cpf,
-    //   imageUrl: tempImageLink,
-    // });
+    const apiRegister = await this.faceRegistrationAdapter.registrate({
+      peopleId: updated.cpf,
+      imageUrl: tempImageLink,
+    });
 
     return updated;
   }

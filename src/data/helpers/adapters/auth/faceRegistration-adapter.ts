@@ -1,7 +1,7 @@
 import { FaceRegistrationRequestType } from 'src/domain/types/adapters/faceRegistration/faceRegistrationRequest-type';
 import { FaceRegistrationResponseType } from 'src/domain/types/adapters/faceRegistration/faceRegistrationResponse-type';
 import { FaceRegistrationAdapterInterface } from '../../../abstract/helpers/adapters/auth/faceRegistration-adapter-interface';
-import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/tokenHandler/tokenHandler-adapter-interface';
+import { TokenHandlerAdapterInterface } from 'src/data/abstract/helpers/adapters/tokenHandler/tokenHandler-adapter-interface';
 import { HttpRequestAdapterInterface } from 'src/data/abstract/helpers/adapters/httpRequest/httpRequest-adapter-interface';
 import { AuthenticationAdapter } from './authentication-adapter';
 import { EnvVariables } from 'src/utils/env/envVariables-util';

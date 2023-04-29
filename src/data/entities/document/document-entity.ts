@@ -6,13 +6,17 @@ import { Entity } from '../entity/entity';
 import { IdGeneratorAdapterInterface } from 'src/data/abstract/helpers/adapters/idGenerator/idGenerator-adapter-interface';
 import { MissingParamError } from 'src/utils/errors/missingParam-error';
 import { InvalidParamError } from 'src/utils/errors/invalidParam-error';
+import { FileHelperInterface } from 'src/data/abstract/helpers/file/file-helper-interface';
 
 export class DocumentEntity extends Entity implements DocumentEntityInterface {
   private documentDto: CreateOrUpdateDocumentType;
   private readonly idGenerator: IdGeneratorAdapterInterface;
 
-  public constructor(idGenerator: IdGeneratorAdapterInterface) {
-    super();
+  public constructor(
+    idGenerator: IdGeneratorAdapterInterface,
+    fileHelper: FileHelperInterface,
+  ) {
+    super(fileHelper);
     this.idGenerator = idGenerator;
   }
 
@@ -39,6 +43,10 @@ export class DocumentEntity extends Entity implements DocumentEntityInterface {
 
     if (this.documentDto.name.toString().length > 100) {
       throw new InvalidParamError('Name too long');
+    }
+
+    if (!this.validateFileType(this.documentDto.document)) {
+      throw new InvalidParamError('Invalid file type');
     }
   }
 

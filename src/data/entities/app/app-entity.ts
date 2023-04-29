@@ -6,13 +6,17 @@ import { Entity } from '../entity/entity';
 import { IdGeneratorAdapterInterface } from 'src/data/abstract/helpers/adapters/idGenerator/idGenerator-adapter-interface';
 import { MissingParamError } from 'src/utils/errors/missingParam-error';
 import { InvalidParamError } from 'src/utils/errors/invalidParam-error';
+import { FileHelperInterface } from 'src/data/abstract/helpers/file/file-helper-interface';
 
 export class AppEntity extends Entity implements AppEntityInterface {
   private appDto: CreateOrUpdateAppType;
   private readonly idGenerator: IdGeneratorAdapterInterface;
 
-  public constructor(idGenerator: IdGeneratorAdapterInterface) {
-    super();
+  public constructor(
+    idGenerator: IdGeneratorAdapterInterface,
+    fileHelper: FileHelperInterface,
+  ) {
+    super(fileHelper);
     this.idGenerator = idGenerator;
   }
 
