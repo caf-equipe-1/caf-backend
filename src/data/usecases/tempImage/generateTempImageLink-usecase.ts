@@ -9,8 +9,12 @@ export class GenerateTempImageLinkUsecase
   private readonly tempImageRepository: TempImageRepositoryInterface;
   private readonly idGeneratorAdapter: IdGeneratorAdapterInterface;
 
-  public constructor(tempImageRepository: TempImageRepositoryInterface) {
+  public constructor(
+    tempImageRepository: TempImageRepositoryInterface,
+    idGeneratorAdapter: IdGeneratorAdapterInterface,
+  ) {
     this.tempImageRepository = tempImageRepository;
+    this.idGeneratorAdapter = idGeneratorAdapter;
   }
 
   public async execute(image: string): Promise<string> {

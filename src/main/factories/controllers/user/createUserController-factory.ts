@@ -17,10 +17,10 @@ import { FileHelper } from 'src/data/helpers/file/file-helper';
 export function makeCreateUserControllerFactory(): CreateUserControllerInterface {
   const database = new DatabaseConnection();
   const userRepository = new UserRepository(database);
-  const idGenerator = new IdGeneratorAdapter();
+  const idGeneratorAdapter = new IdGeneratorAdapter();
   const hasher = new HashAdapter();
   const fileHelper = new FileHelper();
-  const userEntity = new UserEntity(idGenerator, hasher, fileHelper);
+  const userEntity = new UserEntity(idGeneratorAdapter, hasher, fileHelper);
   const tempImageRepository = new TempImageRepository(database);
   const getOneUserUsecase = new GetOneUserUsecase(userRepository);
   const tokenHandler = new TokenHandlerAdapter(getOneUserUsecase);
@@ -31,6 +31,7 @@ export function makeCreateUserControllerFactory(): CreateUserControllerInterface
   );
   const generateTempImageLinkUsecase = new GenerateTempImageLinkUsecase(
     tempImageRepository,
+    idGeneratorAdapter,
   );
   const createUserUsecase = new CreateUserUsecase(
     userRepository,
