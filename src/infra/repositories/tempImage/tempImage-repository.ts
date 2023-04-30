@@ -50,15 +50,11 @@ export class TempImageRepository
         { field: 'id', operator: '=', value: id },
       ]);
 
-      console.log('QUERY BUSCA IMAGEM >>>>>>>>>>>>>>');
-      console.log(tempImageSearchQuery.getSqlQuery());
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-
       const foundTempImage = await this.database.executeSqlQuery(
         tempImageSearchQuery.getSqlQuery(),
       );
 
-      // await this.delete(id);
+      await this.delete(id);
 
       return this.adaptProperties(foundTempImage[0]);
     } catch (error) {

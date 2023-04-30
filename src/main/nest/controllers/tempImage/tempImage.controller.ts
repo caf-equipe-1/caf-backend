@@ -14,14 +14,9 @@ export class TempImageController {
   @Get(':id')
   public async getOne(@Param('id') id: string, @Res() res: Response) {
     const httpRequest: HttpRequest<object> = { id };
-
     const { body } = await this.getTempImageController.execute(httpRequest);
-    console.log('DEBUG IMAGEM RECEBIDA PELO NEST>>>>>>>>>>>>>>>');
-    console.log(body);
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     const image = body.image;
     const imageType = body.imageType;
-
     const binaryData = Buffer.from(image, 'base64');
 
     res.setHeader('Content-Type', `image/${imageType}`);

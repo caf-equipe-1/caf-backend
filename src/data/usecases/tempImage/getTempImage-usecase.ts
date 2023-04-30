@@ -19,23 +19,13 @@ export class GetTempImageUsecase implements GetTempImageUsecaseInterface {
   public async execute(id: string): Promise<ImageDataType> {
     const foundTempImage = await this.tempImageRepository.getOne(id);
 
-    console.log('DEBUG IMAGEM ENCONTRADA SERVICE GET>>>>>>>>>>>>>>>');
-    console.log(foundTempImage);
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-
     if (!foundTempImage) {
       throw new InvalidParamError('Id');
     }
 
     const file = this.fileHelper;
-
     file.setFile(foundTempImage.photo);
-
     const fileInfo = this.fileHelper.getFile();
-
-    console.log('DEBUG INFORMACOES IMAGEM SERVICE GET>>>>>>>>>>>>>>>');
-    console.log(fileInfo);
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
     return { image: fileInfo.file, imageType: fileInfo.fileType };
   }
