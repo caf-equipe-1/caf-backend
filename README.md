@@ -7,13 +7,7 @@
 
 ## Como rodar esse projeto
 
-Para utilizar esse projeto, primeiro baixe-o em sua máquina e cria um arquivo <b>.env</b> com variáveis de acordo com o arquivo <b>.env.example</b> . Também será necessário a execução de uma migration para um banco de dados relacional Postgres com o seguinte comando:
-
-```bash
-$ npm run migrate
-```
-
-Tendo isso feito, o mesmo poderá ser utilizado tanto em servidor local quanto pelo auxílio do Docker.
+Para utilizar esse projeto, primeiro baixe-o em sua máquina e cria um arquivo <b>.env</b> com variáveis de acordo com o arquivo <b>.env.example</b> . Tendo isso feito, o mesmo poderá ser utilizado tanto em servidor local quanto pelo auxílio do Docker.
 
 <div id='utilizando-local'/>
 
@@ -23,6 +17,12 @@ Caso opte por utilizar em servidor local, será necessário a instalação das d
 
 ```bash
 $ npm install
+```
+
+Também será necessário a execução de uma migration para um banco de dados relacional Postgres com o seguinte comando:
+
+```bash
+$ npm run migrate
 ```
 
 Logo após, o projeto já estará pronto para funcionar utilizando um dos seguintes comandos:
