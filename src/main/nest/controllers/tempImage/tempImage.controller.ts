@@ -16,6 +16,9 @@ export class TempImageController {
     const httpRequest: HttpRequest<object> = { id };
 
     const { body } = await this.getTempImageController.execute(httpRequest);
+    console.log('DEBUG IMAGEM RECEBIDA PELO NEST>>>>>>>>>>>>>>>');
+    console.log(body);
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     const image = body.image;
     const imageType = body.imageType;
 

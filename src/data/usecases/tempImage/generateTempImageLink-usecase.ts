@@ -21,7 +21,7 @@ export class GenerateTempImageLinkUsecase
     const id = this.idGeneratorAdapter.generateId();
     const storedImage = await this.tempImageRepository.create(id, image);
 
-    const backendUrl = `${EnvVariables.getBackendUrl()}/temp-image/${
+    const backendUrl = `${EnvVariables.getBackendUrl()}/temp-images/${
       storedImage.id
     }`;
 
