@@ -8,11 +8,17 @@ export class HttpRequestAdapter implements HttpRequestAdapterInterface {
     authorizationHeader = '',
   ): Promise<any> {
     try {
+      console.log('AXIOS ADAPTER DEBUG>>>>>>>>>>>');
+      console.log({ url, body, authorizationHeader });
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
       const response = await axios.post(url, body, {
         headers: {
           Authorization: authorizationHeader,
         },
       });
+
+      console.log(response);
 
       return response.data;
     } catch (error: any) {
