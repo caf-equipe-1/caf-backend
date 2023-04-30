@@ -26,6 +26,14 @@ export class FaceRegistrationAdapter
     const token = this.generateToken();
     const apiUrl = EnvVariables.getAuthApiUrl();
 
+    console.log('REGISTRO API CAF>>>>>>>>>>');
+    console.log({
+      link: `${apiUrl}/register`,
+      body: faceRegistrationRequest,
+      token: token,
+    });
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
     const registration = await this.httpRequestAdapter.post(
       `${apiUrl}/register`,
       faceRegistrationRequest,
