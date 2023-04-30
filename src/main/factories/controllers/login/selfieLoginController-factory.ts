@@ -9,6 +9,8 @@ import { SelfieLoginControllerInterface } from 'src/presentation/abstract/contro
 import { SelfieLoginController } from 'src/presentation/controllers/login/selfieLogin-controller';
 import { FileHelper } from 'src/data/helpers/file/file-helper';
 import { IdGeneratorAdapter } from 'src/data/helpers/adapters/idGenerator/idGenerator-adapter';
+import { FaceAuthenticationAdapter } from 'src/data/helpers/adapters/auth/faceAuthentication-adapter';
+import { HttpRequestAdapter } from 'src/data/helpers/adapters/httpRequest/httpRequest-adapter';
 
 export function makeSelfieLoginControllerFactory(): SelfieLoginControllerInterface {
   const database = new DatabaseConnection();
@@ -18,6 +20,11 @@ export function makeSelfieLoginControllerFactory(): SelfieLoginControllerInterfa
   const tokenHandler = new TokenHandlerAdapter(getOneUserUsecase);
   const fileHelper = new FileHelper();
   const idGeneratorAdapter = new IdGeneratorAdapter();
+  const httpRequestAdapter = new HttpRequestAdapter();
+  const faceAuthentication = new FaceAuthenticationAdapter(
+    tokenHandler,
+    httpRequestAdapter,
+  );
   const generateTempImageLinkUsecase = new GenerateTempImageLinkUsecase(
     tempImageRepository,
     idGeneratorAdapter,
@@ -25,6 +32,7 @@ export function makeSelfieLoginControllerFactory(): SelfieLoginControllerInterfa
   const makeSelfieLoginUsecase = new MakeSelfieLoginUseCase(
     repository,
     tokenHandler,
+    faceAuthentication,
     generateTempImageLinkUsecase,
     fileHelper,
   );

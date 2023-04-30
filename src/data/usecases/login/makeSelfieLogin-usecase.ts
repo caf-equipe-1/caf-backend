@@ -19,11 +19,13 @@ export class MakeSelfieLoginUseCase implements MakeSelfieLoginUseCaseInterface {
   public constructor(
     repository: UserRepositoryInterface,
     tokenHandler: TokenHandlerAdapterInterface,
+    faceAuthentication: FaceAuthenticationAdapterInterface,
     generateTempImageLinkUsecase: GenerateTempImageLinkUsecaseInterface,
     fileHelper: FileHelperInterface,
   ) {
     this.repository = repository;
     this.tokenHandler = tokenHandler;
+    this.faceAuthentication = faceAuthentication;
     this.generateTempImageLinkUsecase = generateTempImageLinkUsecase;
     this.fileHelper = fileHelper;
   }
