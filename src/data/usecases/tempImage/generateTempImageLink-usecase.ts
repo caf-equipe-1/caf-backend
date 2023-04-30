@@ -25,8 +25,6 @@ export class GenerateTempImageLinkUsecase
       storedImage.id
     }`;
 
-    return 'https://caf-backend-production-345a.up.railway.app/temp-images/3d95c796-ca0e-40b6-b6c6-1860ab8f3d7d';
-
     return backendUrl;
   }
 }
