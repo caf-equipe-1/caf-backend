@@ -50,10 +50,14 @@ export class CreateUserUsecase implements CreateUserUsecaseInterface {
       created.photo,
     );
 
-    const apiRegister = await this.faceRegistrationAdapter.registrate({
-      peopleId: created.cpf,
-      imageUrl: tempImageLink,
-    });
+    console.log('LINK DA IMAGEM >>>>>>>>>>>>>>>');
+    console.log(tempImageLink);
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
+    // const apiRegister = await this.faceRegistrationAdapter.registrate({
+    //   peopleId: created.cpf,
+    //   imageUrl: tempImageLink,
+    // });
 
     return created;
   }
