@@ -1,30 +1,16 @@
 import { Controller, Get, Param, Res } from '@nestjs/common';
+import { ApiExcludeEndpoint } from '@nestjs/swagger';
 import { Response } from 'express';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpRequest } from 'src/domain/dtos/http/http-request-dto';
-import { makeHttpResponseDto } from '../../dtos/response/http/httpResponse.dto';
 import { GetTempImageController } from 'src/presentation/controllers/tempImage/getTempImage-controller';
 
-@ApiTags('TempImages')
-@Controller('/user-images')
+@Controller('/temp-images')
 export class TempImageController {
   constructor(
     private readonly getTempImageController: GetTempImageController,
   ) {}
 
-  @ApiResponse({
-    status: 200,
-    description: 'Ok.',
-    schema: makeHttpResponseDto('user'),
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Bad request',
-    schema: makeHttpResponseDto(),
-  })
-  @ApiOperation({
-    summary: 'Route to view an user image.',
-  })
+  @ApiExcludeEndpoint()
   @Get(':id')
   public async getOne(@Param('id') id: string, @Res() res: Response) {
     const httpRequest: HttpRequest<object> = { id };
