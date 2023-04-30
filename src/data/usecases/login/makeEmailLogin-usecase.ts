@@ -4,7 +4,7 @@ import { MakeEmailLoginUseCaseInterface } from 'src/data/abstract/usecases/login
 import { EmailLoginDto } from 'src/domain/dtos/login/emailLogin-dto';
 import { LoggedUserDto } from 'src/domain/dtos/login/loggedUser-dto';
 import { UserRepositoryInterface } from 'src/infra/abstract/repositories/user/user-repository-interface';
-import { InvalidParamError } from 'src/utils/errors/invalidParam-error';
+import { InvalidCredentialsError } from 'src/utils/errors/invalidCredentials-error';
 
 export class MakeEmailLoginUseCase implements MakeEmailLoginUseCaseInterface {
   private readonly repository: UserRepositoryInterface;
@@ -42,10 +42,10 @@ export class MakeEmailLoginUseCase implements MakeEmailLoginUseCaseInterface {
           user: foundUser,
         };
       } else {
-        throw new InvalidParamError('password');
+        throw new InvalidCredentialsError();
       }
     } else {
-      throw new InvalidParamError('email');
+      throw new InvalidCredentialsError();
     }
   }
 }

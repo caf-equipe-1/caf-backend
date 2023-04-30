@@ -6,6 +6,7 @@ import { GenerateTempImageLinkUsecaseInterface } from 'src/data/abstract/usecase
 import { LoggedUserDto } from 'src/domain/dtos/login/loggedUser-dto';
 import { SelfieLoginDto } from 'src/domain/dtos/login/selfieLogin-dto';
 import { UserRepositoryInterface } from 'src/infra/abstract/repositories/user/user-repository-interface';
+import { InvalidCredentialsError } from 'src/utils/errors/invalidCredentials-error';
 import { InvalidParamError } from 'src/utils/errors/invalidParam-error';
 
 export class MakeSelfieLoginUseCase implements MakeSelfieLoginUseCaseInterface {
@@ -60,10 +61,10 @@ export class MakeSelfieLoginUseCase implements MakeSelfieLoginUseCaseInterface {
           user: foundUser,
         };
       } else {
-        throw new InvalidParamError('password');
+        throw new InvalidCredentialsError();
       }
     } else {
-      throw new InvalidParamError('email');
+      throw new InvalidCredentialsError();
     }
   }
 }
