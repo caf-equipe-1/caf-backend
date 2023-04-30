@@ -47,10 +47,21 @@ export class MakeSelfieLoginUseCase implements MakeSelfieLoginUseCaseInterface {
         selfieLoginDto.selfie,
       );
 
+      console.log('DEBUG ENVIO PARA API CAF >>>>>>>');
+      console.log({
+        peopleId: selfieLoginDto.cpf,
+        imageUrl: tempImageLink,
+      });
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
       const comparison = await this.faceAuthentication.authenticate({
         peopleId: selfieLoginDto.cpf,
         imageUrl: tempImageLink,
       });
+
+      console.log('DEBUG RESPOSTA API CAF >>>>>>>');
+      console.log(comparison);
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 
       if (comparison && comparison.isMatch) {
         const token = this.tokenHandler.generateToken(
