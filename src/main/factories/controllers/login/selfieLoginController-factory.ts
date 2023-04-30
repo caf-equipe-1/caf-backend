@@ -8,6 +8,7 @@ import { UserRepository } from 'src/infra/repositories/user/user-repository';
 import { SelfieLoginControllerInterface } from 'src/presentation/abstract/controllers/login/selfieLogin-controller-interface';
 import { SelfieLoginController } from 'src/presentation/controllers/login/selfieLogin-controller';
 import { FileHelper } from 'src/data/helpers/file/file-helper';
+import { IdGeneratorAdapter } from 'src/data/helpers/adapters/idGenerator/idGenerator-adapter';
 
 export function makeSelfieLoginControllerFactory(): SelfieLoginControllerInterface {
   const database = new DatabaseConnection();
@@ -16,8 +17,10 @@ export function makeSelfieLoginControllerFactory(): SelfieLoginControllerInterfa
   const getOneUserUsecase = new GetOneUserUsecase(repository);
   const tokenHandler = new TokenHandlerAdapter(getOneUserUsecase);
   const fileHelper = new FileHelper();
+  const idGeneratorAdapter = new IdGeneratorAdapter();
   const generateTempImageLinkUsecase = new GenerateTempImageLinkUsecase(
     tempImageRepository,
+    idGeneratorAdapter,
   );
   const makeSelfieLoginUsecase = new MakeSelfieLoginUseCase(
     repository,
