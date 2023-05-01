@@ -32,6 +32,8 @@ export class FaceRegistrationAdapter
         token,
       );
 
-    return registration.message.toLowerCase().includes('invalid');
+    return registration.message.toLowerCase().includes('invalid')
+      ? false
+      : true;
   }
 }
