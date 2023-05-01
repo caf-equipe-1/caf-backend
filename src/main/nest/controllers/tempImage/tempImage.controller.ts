@@ -15,6 +15,11 @@ export class TempImageController {
   public async getOne(@Param('id') id: string, @Res() res: Response) {
     const httpRequest: HttpRequest<object> = { id };
     const { body } = await this.getTempImageController.execute(httpRequest);
+
+    if (!body || !body.image || !body.imageType) {
+      res.status(404).send({ message: 'Image not found' });
+    }
+
     const image = body.image;
     const imageType = body.imageType;
     const binaryData = Buffer.from(image, 'base64');
