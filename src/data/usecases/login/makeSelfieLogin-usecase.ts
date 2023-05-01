@@ -52,7 +52,7 @@ export class MakeSelfieLoginUseCase implements MakeSelfieLoginUseCaseInterface {
         imageUrl: tempImageLink,
       });
 
-      if (comparison && comparison.isMatch) {
+      if (comparison) {
         const token = this.tokenHandler.generateToken(
           { id: foundUser.id },
           secret,

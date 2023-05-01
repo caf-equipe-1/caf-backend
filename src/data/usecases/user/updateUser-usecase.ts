@@ -71,6 +71,10 @@ export class UpdateUserUsecase implements UpdateUserUsecaseInterface {
       imageUrl: tempImageLink,
     });
 
+    if (!apiRegister) {
+      throw new InvalidParamError('Invalid CPF and/or image');
+    }
+
     return updated;
   }
 }

@@ -22,15 +22,16 @@ export class FaceRegistrationAdapter
 
   public async registrate(
     faceRegistrationRequest: FaceRegistrationRequestType,
-  ): Promise<FaceRegistrationResponseType> {
+  ): Promise<boolean> {
     const token = this.generateToken();
     const apiUrl = EnvVariables.getAuthApiUrl();
-    const registration = await this.httpRequestAdapter.post(
-      `${apiUrl}/register`,
-      faceRegistrationRequest,
-      token,
-    );
+    const registration: FaceRegistrationResponseType =
+      await this.httpRequestAdapter.post(
+        `${apiUrl}/register`,
+        faceRegistrationRequest,
+        token,
+      );
 
-    return registration;
+    return registration.message.toLowerCase().includes('invalid');
   }
 }

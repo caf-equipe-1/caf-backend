@@ -55,6 +55,10 @@ export class CreateUserUsecase implements CreateUserUsecaseInterface {
       imageUrl: tempImageLink,
     });
 
+    if (!apiRegister) {
+      throw new InvalidParamError('Invalid CPF and/or image');
+    }
+
     return created;
   }
 }

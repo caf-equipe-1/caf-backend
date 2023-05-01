@@ -22,16 +22,16 @@ export class FaceAuthenticationAdapter
 
   public async authenticate(
     faceAuthenticationRequest: FaceRegistrationRequestType,
-  ): Promise<FaceAuthenticationResponseType> {
+  ): Promise<boolean> {
     const token = this.generateToken();
     const apiUrl = EnvVariables.getAuthApiUrl();
+    const authentication: FaceAuthenticationResponseType =
+      await this.httpRequestAdapter.post(
+        `${apiUrl}/authenticate`,
+        faceAuthenticationRequest,
+        token,
+      );
 
-    const authentication = await this.httpRequestAdapter.post(
-      `${apiUrl}/authenticate`,
-      faceAuthenticationRequest,
-      token,
-    );
-
-    return authentication;
+    return authentication.isMatch;
   }
 }
