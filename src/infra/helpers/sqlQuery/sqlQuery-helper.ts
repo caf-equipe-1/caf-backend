@@ -144,7 +144,6 @@ export class SqlQueryHelper implements SqlQueryHelperInterface {
     }
 
     const table = this.table;
-    const action = this.action;
 
     const fields = fieldsRawDefined
       ? this.fieldsRaw
