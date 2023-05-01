@@ -22,9 +22,8 @@ export class DatabaseConnection implements DatabaseConnectionInterface {
       this.client.query('BEGIN', (error, response) => {
         if (error) {
           reject(error);
-        } else {
-          resolve(response.rows);
         }
+        resolve(response.rows);
       });
     });
   }
@@ -34,9 +33,8 @@ export class DatabaseConnection implements DatabaseConnectionInterface {
       this.client.query('ROLLBACK', (error, response) => {
         if (error) {
           reject(error);
-        } else {
-          resolve(response.rows);
         }
+        resolve(response.rows);
       });
     });
   }
@@ -46,9 +44,8 @@ export class DatabaseConnection implements DatabaseConnectionInterface {
       this.client.query('COMMIT', (error, response) => {
         if (error) {
           reject(error);
-        } else {
-          resolve(response.rows);
         }
+        resolve(response.rows);
       });
     });
   }
@@ -64,9 +61,8 @@ export class DatabaseConnection implements DatabaseConnectionInterface {
       this.client.query(sqlQuery, (error, response) => {
         if (error) {
           reject(error);
-        } else {
-          resolve(response.rows);
         }
+        resolve(response.rows);
       });
     });
   }

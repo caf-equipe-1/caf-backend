@@ -25,27 +25,24 @@ export class MakeEmailLoginUseCase implements MakeEmailLoginUseCaseInterface {
     const foundUser = await this.repository.getOneByEmail(emailLoginDto.email);
     const secret = process.env.SECRET;
 
-    if (foundUser) {
-      const comparison = this.hasher.compare(
-        emailLoginDto.password,
-        foundUser.password,
-      );
-
-      if (comparison) {
-        const token = this.tokenHandler.generateToken(
-          { id: foundUser.id },
-          secret,
-        );
-
-        return {
-          token,
-          user: foundUser,
-        };
-      } else {
-        throw new InvalidCredentialsError();
-      }
-    } else {
+    if (!foundUser) {
       throw new InvalidCredentialsError();
     }
+
+    const comparison = this.hasher.compare(
+      emailLoginDto.password,
+      foundUser.password,
+    );
+
+    if (!comparison) {
+      throw new InvalidCredentialsError();
+    }
+
+    const token = this.tokenHandler.generateToken({ id: foundUser.id }, secret);
+
+    return {
+      token,
+      user: foundUser,
+    };
   }
 }

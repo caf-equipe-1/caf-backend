@@ -42,31 +42,28 @@ export class MakeSelfieLoginUseCase implements MakeSelfieLoginUseCaseInterface {
     const foundUser = await this.repository.getOneByCpf(selfieLoginDto.cpf);
     const secret = process.env.SECRET;
 
-    if (foundUser) {
-      const tempImageLink = await this.generateTempImageLinkUsecase.execute(
-        selfieLoginDto.selfie,
-      );
-
-      const comparison = await this.faceAuthentication.authenticate({
-        peopleId: selfieLoginDto.cpf,
-        imageUrl: tempImageLink,
-      });
-
-      if (comparison) {
-        const token = this.tokenHandler.generateToken(
-          { id: foundUser.id },
-          secret,
-        );
-
-        return {
-          token,
-          user: foundUser,
-        };
-      } else {
-        throw new InvalidCredentialsError();
-      }
-    } else {
+    if (!foundUser) {
       throw new InvalidCredentialsError();
     }
+
+    const tempImageLink = await this.generateTempImageLinkUsecase.execute(
+      selfieLoginDto.selfie,
+    );
+
+    const comparison = await this.faceAuthentication.authenticate({
+      peopleId: selfieLoginDto.cpf,
+      imageUrl: tempImageLink,
+    });
+
+    if (!comparison) {
+      throw new InvalidCredentialsError();
+    }
+
+    const token = this.tokenHandler.generateToken({ id: foundUser.id }, secret);
+
+    return {
+      token,
+      user: foundUser,
+    };
   }
 }
